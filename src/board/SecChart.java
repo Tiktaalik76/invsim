@@ -1,6 +1,5 @@
 package board;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -18,55 +17,48 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.DynamicTimeSeriesCollection;
 import org.jfree.data.time.Second;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-
 public class SecChart extends JPanel {
-	DynamicTimeSeriesCollection dataSet;
+	DynamicTimeSeriesCollection mDataSet;
 
 	public SecChart() {
 		super();
+		
+		// chart
 		String title = "";
-		JFreeChart chart;
-		dataSet = new DynamicTimeSeriesCollection(1, 1000, new Second());
+		mDataSet = new DynamicTimeSeriesCollection(1, 1000, new Second());
 		Date date = new Date();
-		dataSet.setTimeBase(new Second(date));
-		dataSet.addSeries(new float[1], 0, title);
-		chart = ChartFactory.createTimeSeriesChart(title, "Time", "Price", dataSet, false, true, false);
-		final XYPlot plot = chart.getXYPlot();
+		mDataSet.setTimeBase(new Second(date));
+		mDataSet.addSeries(new float[1], 0, title);
+		
+		JFreeChart chart;
+		chart = ChartFactory.createTimeSeriesChart(title, "Time", "Price", mDataSet, false, true, false);
+		XYPlot plot = chart.getXYPlot();
 
-		// x축
+		// x-axis
 		DateAxis axis = (DateAxis) plot.getDomainAxis();
-		axis.setDateFormatOverride(new SimpleDateFormat("s")); // 타임 포맷
+		axis.setDateFormatOverride(new SimpleDateFormat("s"));
 		axis.setFixedAutoRange(100000);
-		DateTickUnit unit = new DateTickUnit(DateTickUnit.SECOND,7);
+		@SuppressWarnings("deprecation")
+		DateTickUnit unit = new DateTickUnit(DateTickUnit.SECOND, 7);
 		axis.setTickUnit(unit);
 
-		// y축
+		// y-axis
 		NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
 		DecimalFormat dec = new DecimalFormat();
 		rangeAxis.setNumberFormatOverride(dec);
+		
+		// apply to panel
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		add(chartPanel);
 	}
 
-	public static double[] readDataFromCsv(String filePath) throws IOException, Throwable {
-		int skips = 0;
-		skips = CSVTools.findLastRow(filePath);
-		CSVReader reader = new CSVReaderBuilder(new FileReader(filePath)).withSkipLines(skips-1).build();
-		String[] nextLine;
-		nextLine = reader.readNext();
-		double times = Double.parseDouble(nextLine[0]);
-		double prices = Double.parseDouble(nextLine[1]);
-		return new double[] { times, prices };
-	}
-
-	public void update(String filepath) throws IOException, Throwable {
-		double[] temp = new double[2];
-		float[] newData = new float[1];
-		temp = readDataFromCsv(filepath);
-		newData[0] = (float) temp[1]; // [0] :시간, [1] :가격
-		dataSet.advanceTime(); // x축 시간을 하나추가
-		dataSet.appendData(newData);// 차트에 새로운 y축 데이터 업데이트
+	public void update() throws IOException, Throwable {
+		String file = "C:\\Users\\cms\\eclipse-workspace\\datalist.csv";
+		
+		String[] line = CSVTools.readOneRow(file, CSVTools.findLastRow(file)-1);
+		float[] tempArray = {Float.parseFloat(line[1])};
+		
+		mDataSet.advanceTime(); // x축 시간을 하나추가
+		mDataSet.appendData(tempArray);// 차트에 새로운 y축 데이터 업데이트
 	}
 }

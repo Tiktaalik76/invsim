@@ -1,8 +1,10 @@
 package board;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -24,79 +26,133 @@ import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.DefaultOHLCDataset;
 import org.jfree.data.xy.OHLCDataItem;
 import org.jfree.data.xy.XYDataset;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
 public class DayChart extends JPanel {
+	private static double mLowest;
+	private static double mHighest;
+	private static Date mEnd;
+	private static Date mFirst;
 	
-	public DayChart() {
+	public DayChart() throws IOException, CsvValidationException {
 		super(null);
-		setLayout(new BorderLayout());
-		DateAxis domainAxis = new DateAxis("Date");
-		NumberAxis rangeAxis = new NumberAxis("Price");
-		domainAxis.setAutoRange(true);
-		rangeAxis.setAutoRange(true);
 		
-		CandlestickRenderer renderer = new CandlestickRenderer();
-		XYDataset dataset = getDataSet();
-		XYPlot mainPlot = new XYPlot(dataset, domainAxis, rangeAxis, renderer);
+		// crawl data
+		String file = "C:\\Users\\cms\\eclipse-workspace\\historicaldata.csv";
+		FileWriter writer = new FileWriter(file,false);
+		writer.write(getHistoricalData());
+		writer.close();
+		
+		// set data
+		XYDataset dataSet = getDataSet();		
 
-		renderer.setDrawVolume(true);
-		renderer.setSeriesPaint(0, Color.LIGHT_GRAY);
+		// renderer
+		CandlestickRenderer renderer = new CandlestickRenderer();
+		renderer.setDrawVolume(false);
+		renderer.setSeriesPaint(0, Color.BLACK);
+		renderer.setUpPaint(new Color(0xFF0000));
+		renderer.setDownPaint(new Color(0x0000FF));
+		
+		// x-axis
+		setLayout(new FlowLayout());
+		DateAxis domainAxis = new DateAxis("Date");
+		domainAxis.setRange(mFirst, mEnd);
+		
+		// y-axis
+		NumberAxis rangeAxis = new NumberAxis("Price");
+		rangeAxis.setLowerBound(mLowest);
+		rangeAxis.setUpperBound(mHighest);
+		
+		// apply to panel
+		XYPlot mainPlot = new XYPlot(dataSet, domainAxis, rangeAxis, renderer);
 		JFreeChart chart = new JFreeChart(null, null, mainPlot, false);
-		mainPlot.setDomainPannable(true);
-		mainPlot.setRangePannable(true);
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		add(chartPanel);
 	}
 
-	public static AbstractXYDataset getDataSet() {
-		DefaultOHLCDataset result;
+	private static AbstractXYDataset getDataSet() {
+		DefaultOHLCDataset dataSet;
 		OHLCDataItem[] data;
 		data = getData();
-		result = new DefaultOHLCDataset("asdf", data);
-		return result;
+		dataSet = new DefaultOHLCDataset("", data);
+		return dataSet;
 	}
 
-	public static OHLCDataItem[] getData() {
-		String file = "C:\\Users\\cms\\eclipse-workspace\\ffff.csv";
+	private static OHLCDataItem[] getData() {
+		String file = "C:\\Users\\cms\\eclipse-workspace\\historicaldata.csv";
 		ArrayList<OHLCDataItem> dataItems = new ArrayList<OHLCDataItem>();
+		
 		try {
-			CSVReader reader = new CSVReader(new FileReader(file));
-
-			DateTimeFormatterBuilder formatter = new DateTimeFormatterBuilder().parseCaseInsensitive().parseLenient()
-					.appendPattern("[MMM d yyyy]");
-
-			DateTimeFormatter formatter2 = formatter.toFormatter(Locale.ENGLISH);
+			DateTimeFormatterBuilder formatterBuilder = new DateTimeFormatterBuilder().parseCaseInsensitive().parseLenient().appendPattern("[MMM d yyyy]");
+			DateTimeFormatter format = formatterBuilder.toFormatter(Locale.ENGLISH);
 
 			double open;
 			double high;
 			double low;
 			double close;
 			double volume;
-			String[] line2;
-			String[] line;
+			
+			String[] arrangedLine = null;
+			String[] line1;
 			String line3;
 			
-			while ((line = reader.readNext()) != null) {
-
-				line3 = String.join("", line);
-				line2 = line3.split("@");
-
-				if ((line2[1].contains("Dividend"))||(line2[1].equals("-"))) {
-					continue;
-				}
-				LocalDate dateTime = LocalDate.parse(line2[0], formatter2);
-				Date date = Date.from(dateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
-				open = Double.parseDouble(line2[1]);
-				high = Double.parseDouble(line2[2]);
-				low = Double.parseDouble(line2[3]);
-				close = Double.parseDouble(line2[4]);
-				volume = Double.parseDouble(line2[5]);
-				OHLCDataItem item = new OHLCDataItem(date, open, high, low, close, volume);
-				dataItems.add(item);
+			CSVReader reader1 = new CSVReader(new FileReader(file));
+			while((line1 = reader1.readNext()) != null) {
+				
+				line3 = String.join("", line1);
+				arrangedLine = line3.split("@");
+				
+				if ((arrangedLine[1].contains("Dividend"))||(arrangedLine[1].equals("-"))) {continue;}
+				
+				mLowest = Double.parseDouble(arrangedLine[3]);
+				mHighest = Double.parseDouble(arrangedLine[2]);
+				
+				LocalDate dateTime = LocalDate.parse(arrangedLine[0], format);
+				mEnd = Date.from(dateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				
+				reader1.close();
+				break;
 			}
-			reader.close();
+			
+			line1 = CSVTools.readOneRow(file, CSVTools.findLastRow(file)-1);
+			line3 = String.join("", line1);
+			arrangedLine = line3.split("@");
+			LocalDate dateTime = LocalDate.parse(arrangedLine[0], format);
+			mFirst = Date.from(dateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			
+			
+			CSVReader reader2 = new CSVReader(new FileReader(file));
+			while ((line1 = reader2.readNext()) != null) {
+
+				line3 = String.join("", line1);
+				arrangedLine = line3.split("@");
+
+				if ((arrangedLine[1].contains("Dividend"))||(arrangedLine[1].equals("-"))) {continue;}
+
+				dateTime = LocalDate.parse(arrangedLine[0], format);
+				Date date = Date.from(dateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				open = Double.parseDouble(arrangedLine[1]);
+				high = Double.parseDouble(arrangedLine[2]);
+				low = Double.parseDouble(arrangedLine[3]);
+				close = Double.parseDouble(arrangedLine[4]);
+				volume = Double.parseDouble(arrangedLine[5]);
+				
+				OHLCDataItem item = new OHLCDataItem(date, open, high, low, close, volume);
+				
+				dataItems.add(item);
+				
+				if (mLowest > low) {mLowest = low;}
+				
+				else if (mHighest < high) {mHighest = high;}
+			}
+			reader2.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
@@ -105,5 +161,31 @@ public class DayChart extends JPanel {
 
 		OHLCDataItem[] data = dataItems.toArray(new OHLCDataItem[dataItems.size()]);
 		return data;
+	}
+	
+	public static String getHistoricalData() throws IOException, CsvValidationException {
+		String url1 = "https://finance.yahoo.com/quote/";
+		String url2 = "/history?p=";
+		String file = "C:\\Users\\cms\\eclipse-workspace\\stockCode.csv";
+		
+		String stockCode = CSVTools.readOneFactor(file, 0, 0);
+		
+		String segment = stockCode + ".KS";
+		String url = url1+segment+url2+segment;
+		
+		Document doc = Jsoup.connect(url).timeout(20000).get();
+		
+		Elements stockTableBody = doc.select("table tbody tr");
+		StringBuilder stringBuilder = new StringBuilder();
+		for(Element element : stockTableBody) {
+			for(Element td : element.select("td")) {
+				String text;
+				text = td.text();
+				stringBuilder.append(text);
+				stringBuilder.append("@");
+			}
+			stringBuilder.append("\n");
+		}
+		return stringBuilder.toString();
 	}
 }
