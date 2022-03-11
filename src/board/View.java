@@ -8,9 +8,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,12 +20,15 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 
 public class View extends Thread {
-	String file = "C:\\Users\\cms\\eclipse-workspace\\stockCode.csv";
-	File transactionDetailsFilePath = new File("C:\\Users\\cms\\eclipse-workspace\\transactionDetails.csv");
-	String mStockCode;
+	String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";
+	String stockCode;
+	String transactionDetailsFilePath;
+	public static int mIsUpdated = 0;
+	public static int 예수금 = 0;
 
 	@Override
 	public void run() {
@@ -35,67 +38,83 @@ public class View extends Thread {
 
 			if (result == JOptionPane.CLOSED_OPTION) {
 				System.exit(0);
-			} 
-			else if (result == JOptionPane.YES_OPTION) {
+			} else if (result == JOptionPane.YES_OPTION) {
 				while (true) {
-					this.mStockCode = JOptionPane.showInputDialog("종목 코드를 입력하세요");
+					this.stockCode = JOptionPane.showInputDialog("종목 코드를 입력하세요");
 
 					// 입력된 종목코드 검사
-					CSVReader reader1 = new CSVReader(new FileReader("C:\\Users\\cms\\eclipse-workspace\\stockCodeData.csv"));
+					CSVReader reader1 = new CSVReader(
+							new FileReader("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCodeData.csv"));
 					String[] readNext;
 					int check = 0;
-					while((readNext = reader1.readNext()) != null) {
-						if (readNext[1].equals(mStockCode)) {
+					while ((readNext = reader1.readNext()) != null) {
+						if (readNext[1].equals(stockCode)) {
 							check = 1;
 						}
 					}
-					
-					if (mStockCode.length()==0||mStockCode.equals("")||check == 0) {
+
+					if (stockCode.length() == 0 || stockCode.equals("") || check == 0) {
 						continue;
-					}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
-					
+					}
+
+					// 이전 데이터 삭제
+					Tools.deleteInternalFiles("C:\\Users\\cms\\eclipse-workspace\\bowl");
+
 					// 종목코드 저장
 					FileWriter writer = new FileWriter(file, false);
-					writer.write(mStockCode);
+					writer.write(stockCode);
 					writer.close();
-					
-					File userDetailsFilePath = new File("C:\\Users\\cms\\eclipse-workspace\\userDetails.csv");
-					File transactionDetailsFilePath = new File("C:\\Users\\cms\\eclipse-workspace\\transactionDetails.csv");
-					File dataList = new File("C:\\Users\\cms\\eclipse-workspace\\dataList.csv");
-					
-					// 이전 데이터 삭제
-					userDetailsFilePath.delete();
-					transactionDetailsFilePath.delete();
-					dataList.delete();
-					
+
+					File userDetailsFilePath = new File("C:\\Users\\cms\\eclipse-workspace\\bowl\\userDetails.csv");
+					File transactionDetailsFilePath = new File(
+							"C:\\Users\\cms\\eclipse-workspace\\bowl\\transactionDetails.csv");
+					File dataList = new File("C:\\Users\\cms\\eclipse-workspace\\bowl\\dataList.csv");
+
+					// 종목코드 삭제하고 그냥 bowl 파일안에 있는 모든 파일 삭제해야함.
+
 					// 빈 데이터 생성
-					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\userDetails.csv", false);
-					writer.write("100000000" + "\n" + "0" + "\n" + "0" + "\n" + "0"+ "\n" + "0");
+					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "userDetails.csv",
+							false);
+					writer.write("0" + "\n" + "0" + "\n" + "0" + "\n" + "0");
 					writer.close();
-					
-					transactionDetailsFilePath.createNewFile();
-					
+
+					writer = new FileWriter(
+							"C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "transactionDetails.csv", false);
+					writer.write("0,0\n");
+					writer.close();
+
+					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\accumulatedStockCode.csv", false);
+					writer.write(stockCode + "\n");
+					writer.close();
+
+					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
+					writer.write("100000000");
+					writer.close();
+
 					break;
 				}
+			} else {
+				stockCode = Tools.readOneFactor(file, 0, 0);
 			}
-			else {
-				mStockCode = CSVTools.readOneFactor(file, 0, 0);
-			}
+			transactionDetailsFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode
+					+ "transactionDetails.csv";
+
 			// 스레드 실행
 			Save saveThread = new Save();
 			saveThread.start();
 
 			// 컴포넌트 생성
+			StockListPanel stockList = new StockListPanel();
+			StockTradePanel stockTrade = new StockTradePanel();
 			SecChart secChartPanel = new SecChart();
 			DayChart dayChartPanel = new DayChart();
+			JPanel parentPanel = new JPanel();
+
+			parentPanel.add(dayChartPanel);
+
 			JTabbedPane tabPane = new JTabbedPane();
 			JLabel timeLabel = new JLabel();
-			JLabel quantityNameLabel = new JLabel();
-			JButton buyButton = new JButton("Buy");
-			JButton sellButton = new JButton("Sell");
-			JButton exit = new JButton("Exit");
 			JLabel stockNameLabel = new JLabel();
-			JTextField inputQuantity = new JTextField();
 			JLabel currentPriceGuideLabel = new JLabel();
 			JTextField outputPrice = new JTextField();
 			JPanel identificationPanel = new JPanel();
@@ -118,71 +137,50 @@ public class View extends Thread {
 			JPanel 예수금Panel = new JPanel();
 			JLabel 예수금GuideLabel = new JLabel();
 			JLabel 예수금Label = new JLabel();
-			JLabel[] list = { 예수금Label, 보유수량Label, 매도가능수량Label, 매수금액Label, 손익분기점Label };
+			JLabel[] list = { 보유수량Label, 매도가능수량Label, 매수금액Label, 손익분기점Label };
 
 			// 보더 설정
 			EtchedBorder eborder;
 			eborder = new EtchedBorder(EtchedBorder.RAISED);
 
 			// 컴포넌트 설정
-			secChartPanel.setLocation(0, 150);
-			secChartPanel.setSize(700, 400);
+			stockTrade.setLocation(710, 380);
+			stockTrade.setSize(320, 180);
 
-			tabPane.setLocation(0, 120);
+			tabPane.setLocation(5, 130);
 			tabPane.setSize(700, 430);
 
-			timeLabel.setLocation(700, 2);
-			timeLabel.setSize(200, 70);
+			timeLabel.setLocation(720, 2);
+			timeLabel.setSize(300, 40);
 			timeLabel.setBorder(eborder);
 			timeLabel.setOpaque(true);
 			timeLabel.setBackground(Color.WHITE);
 			timeLabel.setFont(new Font("Gothic", Font.ITALIC, 20));
-
-			buyButton.setLocation(700, 420);
-			buyButton.setSize(130, 130);
-			buyButton.setFont(new Font("Gothic", Font.ITALIC, 30));
-
-			sellButton.setLocation(840, 420);
-			sellButton.setSize(130, 130);
-			sellButton.setFont(new Font("Gothic", Font.ITALIC, 30));
-
-			exit.setLocation(901, 3);
-			exit.setSize(68, 69);
+			timeLabel.setHorizontalAlignment(JLabel.CENTER);
 
 			stockNameLabel.setLocation(500, 120);
 			stockNameLabel.setSize(200, 24);
-			stockNameLabel.setText(Crawl.getStockName(mStockCode) + "(" + mStockCode + ")");
+			stockNameLabel.setText(Crawl.getStockName(stockCode) + "(" + stockCode + ")");
 			stockNameLabel.setHorizontalAlignment(JLabel.RIGHT);
 
-			quantityNameLabel.setLocation(700, 360);
-			quantityNameLabel.setSize(60, 60);
-			quantityNameLabel.setText("수량");
-			quantityNameLabel.setFont(new Font("Gothic", Font.ITALIC, 25));
-
-			currentPriceGuideLabel.setLocation(700, 300);
+			currentPriceGuideLabel.setLocation(720, 310);
 			currentPriceGuideLabel.setSize(80, 60);
 			currentPriceGuideLabel.setText("시장가");
 			currentPriceGuideLabel.setFont(new Font("Gothic", Font.ITALIC, 25));
 
-			inputQuantity.setLocation(785, 375);
-			inputQuantity.setSize(185, 30);
-			inputQuantity.setColumns(10);
-			inputQuantity.setFont(new Font(null, Font.BOLD, 20));
-
-			outputPrice.setLocation(785, 300);
-			outputPrice.setSize(185, 60);
+			outputPrice.setLocation(810, 310);
+			outputPrice.setSize(210, 60);
 			outputPrice.setFont(new Font("Gothic", Font.ITALIC, 25));
+			outputPrice.setHorizontalAlignment(JLabel.CENTER);
 
-			// 이벤트리스너 부착
-			buyButton.addActionListener(new Event());
-			sellButton.addActionListener(new Event());
-			inputQuantity.addActionListener(new Event2());
-			exit.addActionListener(new Event());
+			stockList.setLocation(720, 100);
+			stockList.setSize(300, 200);
+			stockList.setBorder(eborder);
 
 			// 라벨 부착
 			identificationPanel.setLayout(new GridLayout(2, 4));
-			identificationPanel.setLocation(10, 2);
-			identificationPanel.setSize(680, 120);
+			identificationPanel.setLocation(5, 2);
+			identificationPanel.setSize(700, 120);
 			identificationPanel.setBackground(Color.WHITE);
 			identificationPanel.setBorder(eborder);
 
@@ -219,13 +217,13 @@ public class View extends Thread {
 			identificationPanel.add(현재가Label);
 
 			// 탭 부착
-			tabPane.addTab("tab 1", secChartPanel);
-			tabPane.addTab("tab 2", dayChartPanel);
+			tabPane.addTab("실시간", secChartPanel);
+			tabPane.addTab("일간", parentPanel);
 
 			// 라벨 부착
 			예수금Panel.setLayout(new GridLayout(1, 2));
-			예수금Panel.setLocation(700, 82);
-			예수금Panel.setSize(270, 40);
+			예수금Panel.setLocation(720, 45);
+			예수금Panel.setSize(300, 40);
 			예수금Panel.setBorder(eborder);
 			예수금Panel.setBackground(Color.WHITE);
 			예수금Panel.add(예수금GuideLabel);
@@ -234,75 +232,94 @@ public class View extends Thread {
 
 			// 최상위프레임 설정
 			JFrame frame = new JFrame("주식모의투자");
-			frame.setSize(1000, 600);
+			frame.setSize(1050, 600);
 			frame.setVisible(true);
 			frame.setLayout(null);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setResizable(false);
+			frame.setLocationRelativeTo(null);
 
 			// 컴포넌트 부착
 			frame.add(timeLabel);
-			frame.add(buyButton);
-			frame.add(sellButton);
-			frame.add(inputQuantity);
-			frame.add(exit);
+			frame.add(stockTrade);
 			frame.add(stockNameLabel);
-			frame.add(quantityNameLabel);
 			frame.add(currentPriceGuideLabel);
 			frame.add(outputPrice);
 			frame.add(identificationPanel);
 			frame.add(예수금Panel);
 			frame.add(tabPane);
-			
+			frame.add(stockList);
+
 			while (true) {
 				try {
 					String[] detailItem;
-					List<String[]> items = CSVTools.lines();
-					for (int i = 0; i<items.size(); i++) {
+					List<String[]> items = Tools.lines(stockCode);
+					for (int i = 0; i < items.size(); i++) {
 						detailItem = items.get(i);
 						list[i].setText(detailItem[0].toString());
 					}
 
 					secChartPanel.update();
+					String asdf = Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", 0, 0);
+					예수금Label.setText(asdf);
 
 					timeLabel.setText(Crawl.getTime());
-					현재가Label.setText(Crawl.getPrice(mStockCode, 1));
-					outputPrice.setText(Crawl.getPrice(mStockCode, 1));
+					현재가Label.setText(Crawl.getPrice(stockCode, 1));
+					outputPrice.setText(Crawl.getPrice(stockCode, 1));
 
-					
-					CSVReader reader = new CSVReader(new FileReader(transactionDetailsFilePath));
-					String[] readNext;
-					int price;
-					int quantity;
-					int wholequantity = 0;
-					double wholeprice = 0;
-					while((readNext = reader.readNext()) != null) {
-						price = Integer.parseInt(readNext[0]);
-						quantity = Integer.parseInt(readNext[1]);
-						
-						wholequantity += quantity;
-						wholeprice += price*quantity;
-						
-						if(wholeprice == 0 || wholequantity == 0) {
-							wholeprice = 0;
-						}	
-					}
-					
-					int 시장가 = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
-					String 평가금액 = Integer.toString(시장가*wholequantity);
+					String[] wholequantity;
+					String[] wholeprice;
+
+					CSVReader reader = new CSVReaderBuilder(
+							new FileReader("C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "userDetails.csv"))
+									.withSkipLines(1).build();
+					wholequantity = reader.readNext();
+
+					CSVReader reader1 = new CSVReaderBuilder(
+							new FileReader("C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "userDetails.csv"))
+									.withSkipLines(2).build();
+					wholeprice = reader1.readNext();
+
+					int 시장가 = Integer.parseInt(Crawl.getPrice(stockCode, 0));
+					String 평가금액 = Integer.toString(시장가 * Integer.parseInt(wholequantity[0]));
 					평가금액Label.setText(평가금액);
-					
-					if(wholeprice == 0 || wholequantity == 0) {
-						평가손익Label.setText("0");	
+
+					if (wholeprice[0].equals("0") || wholequantity.equals("0")) {
+						평가손익Label.setText("0");
 						수익률Label.setText("0");
-					}
-					else {
-						String 평가손익 = Double.toString(시장가*wholequantity - wholeprice);
+					} else {
+						String 평가손익 = Integer
+								.toString(시장가 * Integer.parseInt(wholequantity[0]) - Integer.parseInt(wholeprice[0]));
 						평가손익Label.setText(평가손익);
-						String 수익률 = String.format("%.2f", (시장가*wholequantity - wholeprice)/wholeprice*100);
-						수익률Label.setText(수익률+"%");
+
+						DecimalFormat df = new DecimalFormat("0.00");
+
+						String 수익률 = df
+								.format((시장가 * Integer.parseInt(wholequantity[0]) - Integer.parseInt(wholeprice[0]))
+										/ Double.parseDouble(wholeprice[0]) * 100);
+
+						수익률Label.setText(수익률 + "%");
 					}
-					
+					if (mIsUpdated == 1) {
+						this.stockCode = Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv",
+								0, 0);
+
+						this.transactionDetailsFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode
+								+ "transactionDetails.csv";
+
+						dayChartPanel.repaint();
+
+						stockNameLabel.setText(Crawl.getStockName(stockCode) + "(" + stockCode + ")");
+
+						parentPanel.removeAll();
+
+						DayChart newDayChartPanel = new DayChart();
+
+						parentPanel.add(newDayChartPanel);
+
+						View.mIsUpdated = 0;
+
+					}
 					sleep(1000);
 
 				} catch (IOException e) {

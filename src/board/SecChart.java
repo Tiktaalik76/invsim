@@ -22,14 +22,14 @@ public class SecChart extends JPanel {
 
 	public SecChart() {
 		super();
-		
+
 		// chart
 		String title = "";
 		mDataSet = new DynamicTimeSeriesCollection(1, 1000, new Second());
 		Date date = new Date();
 		mDataSet.setTimeBase(new Second(date));
 		mDataSet.addSeries(new float[1], 0, title);
-		
+
 		JFreeChart chart;
 		chart = ChartFactory.createTimeSeriesChart(title, "Time", "Price", mDataSet, false, true, false);
 		XYPlot plot = chart.getXYPlot();
@@ -46,18 +46,18 @@ public class SecChart extends JPanel {
 		NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
 		DecimalFormat dec = new DecimalFormat();
 		rangeAxis.setNumberFormatOverride(dec);
-		
+
 		// apply to panel
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		add(chartPanel);
 	}
 
 	public void update() throws IOException, Throwable {
-		String file = "C:\\Users\\cms\\eclipse-workspace\\datalist.csv";
-		
-		String[] line = CSVTools.readOneRow(file, CSVTools.findLastRow(file)-1);
-		float[] tempArray = {Float.parseFloat(line[1])};
-		
+		String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\datalist.csv";
+
+		String[] line = Tools.readOneRow(file, Tools.findLastRow(file) - 1);
+		float[] tempArray = { Float.parseFloat(line[1]) };
+
 		mDataSet.advanceTime(); // x축 시간을 하나추가
 		mDataSet.appendData(tempArray);// 차트에 새로운 y축 데이터 업데이트
 	}

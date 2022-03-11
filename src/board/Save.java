@@ -7,15 +7,15 @@ import com.opencsv.exceptions.CsvValidationException;
 
 public class Save extends Thread {
 	private static String mStockCode;
-	
+
 	@Override
 	public void run() {
-		String writeFilePath = "C:\\Users\\cms\\eclipse-workspace\\dataList.csv";
-		String readFilePath = "C:\\Users\\cms\\eclipse-workspace\\stockCode.csv";
+		String writeFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\dataList.csv";
+		String readFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";
 
 		while (true) {
-			try {				
-				mStockCode = CSVTools.readOneFactor(readFilePath, 0, 0);
+			try {
+				mStockCode = Tools.readOneFactor(readFilePath, 0, 0);
 
 				// time
 				String[] temparr1 = Crawl.getTime().split("-");
@@ -27,9 +27,9 @@ public class Save extends Thread {
 				writer.close();
 
 				Thread.sleep(1000);
-				
-				if (!this.isAlive()) break;
-				
+
+				if (!this.isAlive())
+					break;
 
 			} catch (IOException e) {
 				e.printStackTrace();
