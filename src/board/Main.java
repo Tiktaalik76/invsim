@@ -1,9 +1,13 @@
 package board;
 
+import java.io.IOException;
+
+import com.opencsv.exceptions.CsvValidationException;
+
 public class Main {
 
-	public static void main(String[] args) {
-		View viewThread = new View();
-		viewThread.start();
+	public static void main(String[] args) throws CsvValidationException, IOException {
+		new View();
+
 	}
 }

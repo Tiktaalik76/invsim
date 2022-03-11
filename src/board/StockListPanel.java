@@ -25,12 +25,12 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
 public class StockListPanel extends JPanel implements MouseListener, KeyListener, ListSelectionListener {
-	private JList list;
+	private JList<String> list;
 	private JTextField inputField;
-	private JButton addBtn; // 추가 버튼
-	private JButton selBtn; // 삭제 버튼
+	private JButton addBtn;
+	private JButton selBtn;
 
-	private DefaultListModel model; // JList에 보이는 실제 데이터
+	private DefaultListModel<String> model;
 	private JScrollPane scrolled;
 
 	public StockListPanel() throws CsvValidationException, IOException {
@@ -39,7 +39,7 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 	}
 
 	public void init() throws CsvValidationException, IOException {
-		model = new DefaultListModel();
+		model = new DefaultListModel<String>();
 		CSVReader reader = new CSVReader(
 				new FileReader("C:\\Users\\cms\\eclipse-workspace\\bowl\\accumulatedStockCode.csv"));
 		String[] readNext;
@@ -48,31 +48,31 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 			model.add(i, readNext[0]);
 		}
 
-		list = new JList(model);
+		list = new JList<String>(model);
 		inputField = new JTextField(9);
 		addBtn = new JButton("종목추가");
 		selBtn = new JButton("적용");
 
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // 하나만 선택 될 수 있도록
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		inputField.addKeyListener(this); // 엔터 처리
-		addBtn.addMouseListener(this); // 아이템 추가
-		selBtn.addMouseListener(this); // 아이템 삭제
-		list.addListSelectionListener(this); // 항목 선택시
+		inputField.addKeyListener(this);
+		addBtn.addMouseListener(this);
+		selBtn.addMouseListener(this);
+		list.addListSelectionListener(this);
 
 		this.setLayout(new BorderLayout());
 
 		JPanel topPanel = new JPanel(new FlowLayout(10, 10, FlowLayout.LEFT));
 		topPanel.add(inputField);
 		topPanel.add(addBtn);
-		topPanel.add(selBtn); // 위쪽 패널 [textfield] [add] [del]
-		topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 상, 좌, 하, 우 공백(Padding)
+		topPanel.add(selBtn);
+		topPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
 		scrolled = new JScrollPane(list);
 		scrolled.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 
 		this.add(topPanel, "North");
-		this.add(scrolled, "Center"); // 가운데 list
+		this.add(scrolled, "Center");
 
 		this.setSize(190, 150);
 		this.setVisible(true);
@@ -115,14 +115,26 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 			}
 		}
 		if (e.getSource() == selBtn) {
-			int selected = list.getSelectedIndex();
 			try {
+				int selected = list.getSelectedIndex();
 				applyItem(selected);
+			
+				View.topPanel.removeAll();
+				DayChartPanel chartPanel = new DayChartPanel();				
+				View.topPanel.add(chartPanel);
+				
+				
 			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (CsvValidationException e1) {
 				e1.printStackTrace();
 			}
 
-			View.mIsUpdated = 1;
+			IdentificationPanel.mStockCodeIsUpdated = 1;
+			//DayChartPanel.mStockCodeIsUpdated = 1;
+			SecChartPanel.mStockCodeIsUpdated = 1;
+			InfoDisplayPanel.mStockCodeIsUpdated = 1;
+
 		}
 	}
 
@@ -135,9 +147,9 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 
 		String stockCode = (String) model.get(index);
 
-		FileWriter writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv", false);
-		writer.write(stockCode);
-		writer.close();
+		FileWriter writer1 = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv", false);
+		writer1.write(stockCode);
+		writer1.close();
 
 		FileWriter writer2 = new FileWriter(
 				"C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "transactionDetails.csv", false);
@@ -151,9 +163,8 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 		if (inputText == null || inputText.length() == 0)
 			return;
 		model.addElement(inputText);
-		inputField.setText(""); // 내용 지우기
-		inputField.requestFocus(); // 다음 입력을 편하게 받기 위해서 TextField에 포커스 요청
-		// 가장 마지막으로 list 위치 이동
+		inputField.setText("");
+		inputField.requestFocus();
 		scrolled.getVerticalScrollBar().setValue(scrolled.getVerticalScrollBar().getMaximum());
 	}
 
@@ -210,8 +221,5 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		if (!e.getValueIsAdjusting()) { // 이거 없으면 mouse 눌릴때, 뗄때 각각 한번씩 호출되서 총 두번 호출
-			System.out.println("selected :" + list.getSelectedValue());
-		}
 	}
 }

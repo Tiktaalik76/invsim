@@ -34,19 +34,23 @@ import org.jsoup.select.Elements;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class DayChart extends JPanel {
+public class DayChartPanel extends JPanel {
+
+	public static int mStockCodeIsUpdated = 0;
+	public static String mStockCode;
+	public static JPanel topPanel = new JPanel();
 	private static double mLowest;
 	private static double mHighest;
 	private static Date mEnd;
 	private static Date mStart;
 
-	public DayChart() throws IOException, CsvValidationException {
-		super(null);
+	public DayChartPanel() throws CsvValidationException, IOException {
 
 		// crawl data
 		String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\historicaldata.csv";
 		FileWriter writer = new FileWriter(file, false);
-		writer.write(getHistoricalData());
+		String historicalData = getHistoricalData();
+		writer.write(historicalData);
 		writer.close();
 
 		// set data
@@ -159,6 +163,7 @@ public class DayChart extends JPanel {
 					mHighest = high;
 				}
 			}
+
 			reader2.close();
 
 		} catch (Exception e) {
@@ -171,7 +176,7 @@ public class DayChart extends JPanel {
 		return data;
 	}
 
-	public static String getHistoricalData() throws IOException, CsvValidationException {
+	private static String getHistoricalData() throws CsvValidationException, IOException {
 		String url1 = "https://finance.yahoo.com/quote/";
 		String url2 = "/history?p=";
 		String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";

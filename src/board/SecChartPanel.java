@@ -17,10 +17,14 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.DynamicTimeSeriesCollection;
 import org.jfree.data.time.Second;
 
-public class SecChart extends JPanel {
-	DynamicTimeSeriesCollection mDataSet;
+import com.opencsv.exceptions.CsvValidationException;
 
-	public SecChart() {
+public class SecChartPanel extends JPanel {
+	DynamicTimeSeriesCollection mDataSet;
+	public static int mStockCodeIsUpdated = 0;
+	public static String mStockCode;
+
+	public SecChartPanel() throws CsvValidationException, IOException {
 		super();
 
 		// chart
@@ -50,15 +54,42 @@ public class SecChart extends JPanel {
 		// apply to panel
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		add(chartPanel);
+
+		// stockCode 인식
+		mStockCode = Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
+
+		Thread updateThread = new Thread(new Update());
+		updateThread.start();
 	}
 
-	public void update() throws IOException, Throwable {
-		String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\datalist.csv";
+	class Update implements Runnable {
+		@Override
+		public void run() {
+			while (true) {
+				try {
 
-		String[] line = Tools.readOneRow(file, Tools.findLastRow(file) - 1);
-		float[] tempArray = { Float.parseFloat(line[1]) };
+					String tempString = Crawl.getPrice(mStockCode, 0);
+					float tempFloat = Float.parseFloat(tempString);
+					float[] tempArray = { tempFloat };
 
-		mDataSet.advanceTime(); // x축 시간을 하나추가
-		mDataSet.appendData(tempArray);// 차트에 새로운 y축 데이터 업데이트
+					mDataSet.advanceTime(); // x축 시간을 하나추가
+					mDataSet.appendData(tempArray);// 차트에 새로운 y축 데이터 업데이트
+					
+					Thread.sleep(1000);
+
+					if (mStockCodeIsUpdated == 1) {
+						mStockCode = Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
+						mStockCodeIsUpdated = 0;
+					}
+
+				} catch (CsvValidationException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

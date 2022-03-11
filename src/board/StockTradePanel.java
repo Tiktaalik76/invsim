@@ -43,13 +43,10 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 		buyBtn.addMouseListener(this);
 		sellBtn.addMouseListener(this);
 
-		this.setLayout(null);
-
 		this.add(guideLabel);
 		this.add(inputQuantity);
 		this.add(buyBtn);
 		this.add(sellBtn);
-		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		guideLabel.setSize(80, 60);
 		guideLabel.setLocation(10, 0);
@@ -63,16 +60,19 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 		sellBtn.setSize(145, 100);
 		sellBtn.setLocation(165, 70);
 
+		this.setLayout(null);
+		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		this.setSize(300, 300);
 		this.setVisible(true);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
-		String stockCodeFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";
-		String mStockCode;
 		try {
+
+			String stockCodeFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";
+			String mStockCode;
+			
 			mStockCode = Tools.readOneFactor(stockCodeFilePath, 0, 0);
 
 			String transactionDetailsFilePath1 = "C:\\Users\\cms\\eclipse-workspace\\bowl\\";
@@ -97,13 +97,13 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 					writer.close();
 
 					예수금 -= 시장가 * quantity;
-					
+
 					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
 					writer.write(Integer.toString(예수금));
 					writer.close();
-					
-					View.cash = 예수금;
-					
+
+					InfoDisplayPanel.mCashIsUpdated = 1;
+
 					JOptionPane.showMessageDialog(null, "매수가 체결되었습니다", "안내", JOptionPane.PLAIN_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(null, "수량을 다시 입력하세요" + "\n" + "수량은 양의 정수" + "\n", "안내",
@@ -114,11 +114,11 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 			if (e.getSource() == sellBtn) {
 				int quantity = Integer.parseInt(inputQuantity.getText());
 
-				CSVReader reader = new CSVReader(new FileReader(transactionDetailsFilePath));
+				CSVReader reader1 = new CSVReader(new FileReader(transactionDetailsFilePath));
 				String[] readNext;
 				int 수량;
 				int 총수량 = 0;
-				while ((readNext = reader.readNext()) != null) {
+				while ((readNext = reader1.readNext()) != null) {
 					수량 = Integer.parseInt(readNext[1]);
 					총수량 += 수량;
 				}
@@ -136,8 +136,8 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
 					writer.write(Integer.toString(예수금));
 					writer.close();
-					
-					View.cash = 예수금;
+
+					InfoDisplayPanel.mCashIsUpdated = 1;
 
 					JOptionPane.showMessageDialog(null, "매수가 체결되었습니다", "안내", JOptionPane.PLAIN_MESSAGE);
 				} else {
@@ -154,9 +154,9 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 			int 손익분기점 = 0;
 			int 매도가능수량 = 0;
 
-			CSVReader detailReader = new CSVReader(new FileReader(transactionDetailsFilePath));
+			CSVReader reader2 = new CSVReader(new FileReader(transactionDetailsFilePath));
 			String[] readNext;
-			while ((readNext = detailReader.readNext()) != null) {
+			while ((readNext = reader2.readNext()) != null) {
 
 				거래금액 = Integer.parseInt(readNext[0]);
 				수량 = Integer.parseInt(readNext[1]);
@@ -168,19 +168,15 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 				매수금액 += 거래금액 * 수량;
 
 				if (총보유수량 == 0) {
-					// 예수금 이외 거래 내역 초기화
-
+					//거래 내역 초기화
 					총보유수량 = 0;
 					매수금액 = 0;
 					손익분기점 = 0;
 					매도가능수량 = 0;
 
 				} else {
-
 					손익분기점 = 매수금액 / 총보유수량;
-
 					매도가능수량 = 총보유수량;
-
 				}
 			}
 

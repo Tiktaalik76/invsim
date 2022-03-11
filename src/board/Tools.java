@@ -36,7 +36,7 @@ public class Tools {
 		return temp[index];
 	}
 
-	public static List<String[]> lines(String stockCode) throws IOException, CsvException {
+	public static List<String[]> readAll(String stockCode) throws IOException, CsvException {
 		CSVReader reader = new CSVReader(
 				new FileReader("C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "userDetails.csv"));
 		List<String[]> temp = reader.readAll();
