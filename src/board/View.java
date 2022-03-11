@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
@@ -21,13 +22,16 @@ public class View extends Thread {
 		JOptionPane.showMessageDialog(null, "테스트 중", "안내", JOptionPane.PLAIN_MESSAGE);
 
 		// 컴포넌트 생성
-		JChart chartPanel = new JChart();
+		SecChart secChartPanel = new SecChart();
+		DayChart dayChartPanel = new DayChart();
+		
+		JTabbedPane pane = new JTabbedPane();
 		JLabel timeLabel = new JLabel();
 		JLabel quantityNameLabel = new JLabel();
 		JButton buyButton = new JButton("Buy");
 		JButton sellButton = new JButton("Sell");
 		JButton exit = new JButton("Exit");
-		JLabel stockName = new JLabel();
+		//JLabel stockName = new JLabel();
 		JTextField inputQuantity = new JTextField();
 		JLabel currentPriceGuideLabel = new JLabel();
 		JTextField outputPrice = new JTextField();
@@ -58,9 +62,12 @@ public class View extends Thread {
 		eborder = new EtchedBorder(EtchedBorder.RAISED);
 
 		// 컴포넌트 설정
-		chartPanel.setLocation(0, 150);
-		chartPanel.setSize(700, 400);
+		secChartPanel.setLocation(0, 150);
+		secChartPanel.setSize(700, 400);
 
+		pane.setLocation(0, 120);
+		pane.setSize(700, 430);
+		
 		timeLabel.setLocation(700, 2);
 		timeLabel.setSize(200, 70);
 		timeLabel.setBorder(eborder);
@@ -78,12 +85,12 @@ public class View extends Thread {
 
 		exit.setLocation(901, 3);
 		exit.setSize(68, 69);
-
+/*
 		stockName.setLocation(10, 126);
 		stockName.setSize(200, 24);
 		stockName.setText(" 종목명 (종목코드)");
 		stockName.setBorder(eborder);
-
+*/
 		quantityNameLabel.setLocation(700, 360);
 		quantityNameLabel.setSize(60, 60);
 		quantityNameLabel.setText("수량");
@@ -102,9 +109,6 @@ public class View extends Thread {
 		outputPrice.setLocation(785, 300);
 		outputPrice.setSize(185, 60);
 		outputPrice.setFont(new Font("Gothic", Font.ITALIC, 25));
-
-		// 변수
-		int count = 0;
 
 		// 이벤트리스너 부착
 		buyButton.addActionListener(new Event());
@@ -152,6 +156,10 @@ public class View extends Thread {
 		현재가GuideLabel.setText("현재가");
 		identificationPanel.add(현재가Label);
 
+		// 탭 부착
+		pane.addTab("tab 2", dayChartPanel);
+		pane.addTab("tab 1", secChartPanel);
+		
 		// 라벨 부착
 		예수금Panel.setLayout(new GridLayout(1, 2));
 		예수금Panel.setLocation(700, 82);
@@ -172,23 +180,22 @@ public class View extends Thread {
 
 		// 컴포넌트 부착
 		frame.add(timeLabel);
-		frame.add(chartPanel);
+		//frame.add(chartPanel);
 		frame.add(buyButton);
 		frame.add(sellButton);
 		frame.add(inputQuantity);
 		frame.add(exit);
-		frame.add(stockName);
+		//frame.add(stockName);
 		frame.add(quantityNameLabel);
 		frame.add(currentPriceGuideLabel);
 		frame.add(outputPrice);
 		frame.add(identificationPanel);
 		frame.add(예수금Panel);
+		frame.add(pane);
 
 		while (true) {
 			try {
 				timeLabel.setText(Crawl.getTime());
-				
-				
 				String[] detailItems;
 				List<String[]> items = CSVTools.lines();
 				for (int i = 0; i<items.size(); i++) {
@@ -196,15 +203,12 @@ public class View extends Thread {
 					list[i].setText(detailItems[0].toString());
 				}
 				
-				if ((count % 7) == 0) {
-					chartPanel.update("C:\\Users\\cms\\eclipse-workspace\\out.csv");
-					String[] temp = Crawl.getPrice();
-					현재가Label.setText(temp[1]);
-					outputPrice.setText(temp[1]);
-				}
-
+				secChartPanel.update("C:\\Users\\cms\\eclipse-workspace\\out.csv");
+				String[] temp = Crawl.getPrice();
+				현재가Label.setText(temp[1]);
+				outputPrice.setText(temp[1]);
+				
 				sleep(1000);
-				count++;
 
 			} catch (IOException e) {
 				e.printStackTrace();
