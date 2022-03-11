@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Crawl {
@@ -33,6 +34,26 @@ public class Crawl {
 
 		return method_currentPrice; // { "212000", "212,000" }
 	}
+	
+	public static String getHistoricalData() throws IOException {
+		String url = "https://finance.yahoo.com/quote/AAPL/history?p=AAPL";
+		Document doc = null;
+		doc = Jsoup.connect(url).get();
+		
+		Elements stockTableBody = doc.select("table tbody tr");
+		StringBuilder sb = new StringBuilder();
+		for(Element element : stockTableBody) {
+			for(Element td : element.select("td")) {
+				String text;
+				text = td.text();
+				sb.append(text);
+				sb.append(",");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+	
 	
 	public static String getTime() {
 		String strCurrentTime;
