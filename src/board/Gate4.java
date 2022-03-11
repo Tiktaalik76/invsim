@@ -101,7 +101,7 @@ public class Gate4 implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == regiBtn) {
-			
+
 			String inputPN = pnbowl.getText();
 			String inputans1 = ans1bowl.getText();
 			String inputans2 = ans2bowl.getText();
@@ -111,7 +111,38 @@ public class Gate4 implements MouseListener {
 			if (checking(inputPN)) {
 				if (Gate1.checking("pass", inputans1)) {
 					if (Gate1.checking("pass", inputans2)) {
-						message = check(inputPN, inputans1, inputans2);
+						try (CSVReader rd = new CSVReader(new FileReader(file));
+								FileWriter fw = new FileWriter(file, true)) {
+							Random ran = new Random();
+							String[] bowl;
+
+							int numbering = 0;
+							while (true) {
+								numbering = ran.nextInt(1000000);
+								String comp = Integer.toString(numbering);
+								boolean exist = false;
+
+								if ((bowl = rd.readNext()) != null) {
+									if (bowl[5].equals(comp)) {
+										exist = true;
+									}
+								} else if (exist) {
+									continue;
+								} else if (!(exist)) {
+									break;
+								}
+							}
+
+							fw.write(id + "," + pw + "," + inputPN + "," + inputans1 + "," + inputans2 + "," + numbering
+									+ "," + "0" +"\n");
+
+							message = "회원 가입이 완료되었습니다.";
+							frame.dispose();
+
+						} catch (IOException | CsvValidationException e1) {
+							e1.printStackTrace();
+						}
+
 					} else {
 						message = "질문 2를 다시 입력하세요.";
 					}
@@ -130,35 +161,6 @@ public class Gate4 implements MouseListener {
 
 	private String check(String inputPN, String inputans1, String inputans2) {
 		String message = null;
-		try (CSVReader rd = new CSVReader(new FileReader(file)); FileWriter fw = new FileWriter(file, true)) {
-			Random ran = new Random();
-			String[] bowl;
-
-			int numbering = 0;
-			/*while (true) {
-				numbering = ran.nextInt(1000000);
-				String comp = Integer.toString(numbering);
-				boolean exist = false;
-
-				if ((bowl = rd.readNext()) != null) {
-					if (bowl[5].equals(comp)) {
-						exist = true;
-					}
-				} else if (exist) {
-					continue;
-				} else if (!(exist)) {
-					break;
-				}
-			}
-*/
-			fw.write(id + "," + pw + "," + inputPN + "," + inputans1 + "," + inputans2 + "," + numbering + "\n");
-
-			message = "회원 가입이 완료되었습니다.";
-			frame.dispose();
-
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 		return message;
 	}
 

@@ -185,8 +185,7 @@ public class Gate1 implements MouseListener {
 						if (question.equals(bowl[2]))
 							JOptionPane.showMessageDialog(null, "아이디는 \"" + bowl[0] +"\" 입니다.", "안내", JOptionPane.PLAIN_MESSAGE);
 						i = 1;
-					}					
-					
+					}
 				}
 				if (i == 0) {
 					JOptionPane.showMessageDialog(null, "회원정보가 없습니다.", "안내", JOptionPane.PLAIN_MESSAGE);

@@ -109,9 +109,17 @@ public class Gate2 implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == newStart) {
-
+			// 종목코드 받고 미리 차트랑 뭐랑 생성
+			// 이전 데이터 지우기 (사용자 고유번호)로 식별해서 지운다.
+			// 그 후 사용자 정보 맨 뒤에 1을 넣는다. 
+			
+			
+			
 		} else if (e.getSource() == oldStart) {
-
+			// 사용자 정보 맨 뒤에 1인 경우에만 실행할 수 있도록 함
+			// 그대로 실행함
+			
+			
 		} else if (e.getSource() == withdrawalBtn) {
 			try {
 				CSVReader inspector = new CSVReader(new FileReader(file));
