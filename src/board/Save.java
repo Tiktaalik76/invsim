@@ -13,7 +13,7 @@ public class Save extends Thread {
 	@Override
 	public void run() {
 		File file = new File("C:\\Users\\cms\\eclipse-workspace\\out.csv");
-		String url = "https://finance.naver.com/item/sise.naver?code=019170";
+		String url = "https://finance.naver.com/item/sise.naver?code=373220";
 
 		while (true) {
 			try {

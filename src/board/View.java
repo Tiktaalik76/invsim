@@ -2,13 +2,9 @@ package board;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,8 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
-
-import com.opencsv.CSVReader;
 
 public class View extends Thread {
 	@Override
@@ -57,7 +51,8 @@ public class View extends Thread {
 		JPanel 예수금Panel = new JPanel();
 		JLabel 예수금GuideLabel = new JLabel();
 		JLabel 예수금Label = new JLabel();
-
+		JLabel[] list = {예수금Label, 평가손익Label, 수익률Label, 보유수량Label, 평가금액Label, 매도가능수량Label, 매수금액Label, 손익분기점Label};
+		
 		// 보더 설정
 		EtchedBorder eborder;
 		eborder = new EtchedBorder(EtchedBorder.RAISED);
@@ -109,14 +104,14 @@ public class View extends Thread {
 		outputPrice.setFont(new Font("Gothic", Font.ITALIC, 25));
 
 		// 변수
-		String strCurrentTime;
 		int count = 0;
 
 		// 이벤트리스너 부착
-		buyButton.addActionListener(new TradingButtonEvent());
-		sellButton.addActionListener(new TradingButtonEvent());
-		inputQuantity.addActionListener(new QuantityEvent());
-		exit.addActionListener(new ExitEvent());
+		buyButton.addActionListener(new Event());
+		sellButton.addActionListener(new Event());
+		inputQuantity.addActionListener(new Event2());
+		exit.addActionListener(new Event());
+		
 
 		// 라벨 부착
 		identificationPanel.setLayout(new GridLayout(2, 4));
@@ -191,31 +186,21 @@ public class View extends Thread {
 
 		while (true) {
 			try {
-
-				Date currentTime = new Date();
-				SimpleDateFormat simplify = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-				strCurrentTime = (String) simplify.format(currentTime);
-				timeLabel.setText(strCurrentTime);
-				String filePath = "C:\\Users\\cms\\eclipse-workspace\\sumHistory.csv";
-				CSVReader detailReader = new CSVReader(new FileReader(filePath));
-				String[] nextRecord;
+				timeLabel.setText(Crawl.getTime());
 				
-				if ((nextRecord = detailReader.readNext()) != null) {
-					평가손익Label.setText(Update.bring평가손익());
-					수익률Label.setText(Update.bring수익률());
-					보유수량Label.setText(Update.bring보유수량());
-					평가금액Label.setText(Update.bring평가금액());
-					매도가능수량Label.setText(Update.bring매도가능수량());
-					매수금액Label.setText(Update.bring매수금액());
-					손익분기점Label.setText(Update.bring손익분기점());
-					예수금Label.setText(Update.bring예수금());
+				
+				String[] detailItems;
+				List<String[]> items = CSVTools.lines();
+				for (int i = 0; i<items.size(); i++) {
+					detailItems = items.get(i);
+					list[i].setText(detailItems[0].toString());
 				}
 				
 				if ((count % 7) == 0) {
 					chartPanel.update("C:\\Users\\cms\\eclipse-workspace\\out.csv");
 					String[] temp = Crawl.getPrice();
-					현재가Label.setText(temp[0]);
-					outputPrice.setText(temp[0]);
+					현재가Label.setText(temp[1]);
+					outputPrice.setText(temp[1]);
 				}
 
 				sleep(1000);

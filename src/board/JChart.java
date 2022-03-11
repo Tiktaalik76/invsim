@@ -22,7 +22,6 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
 public class JChart extends JPanel {
-	public static int skips;
 	DynamicTimeSeriesCollection dataSet;
 
 	public JChart() {
@@ -52,7 +51,9 @@ public class JChart extends JPanel {
 	}
 
 	public static double[] readDataFromCsv(String filePath) throws IOException, Throwable {
-		CSVReader reader = new CSVReaderBuilder(new FileReader(filePath)).withSkipLines(skips).build();
+		int skips = 0;
+		skips = CSVTools.findLastRow(filePath);
+		CSVReader reader = new CSVReaderBuilder(new FileReader(filePath)).withSkipLines(skips-1).build();
 		String[] nextLine;
 		nextLine = reader.readNext();
 		double times = Double.parseDouble(nextLine[0]);
