@@ -56,7 +56,7 @@ public class SecChartPanel extends JPanel {
 		add(chartPanel);
 
 		// stockCode ÀÎ½Ä
-		mStockCode = Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
+		mStockCode = Tools.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
 
 		Thread updateThread = new Thread(new Update());
 		updateThread.start();
@@ -78,7 +78,7 @@ public class SecChartPanel extends JPanel {
 					Thread.sleep(1000);
 
 					if (mStockCodeIsUpdated == 1) {
-						mStockCode = Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
+						mStockCode = Tools.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
 						mStockCodeIsUpdated = 0;
 					}
 

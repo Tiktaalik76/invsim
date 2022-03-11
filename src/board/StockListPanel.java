@@ -41,7 +41,7 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 	public void init() throws CsvValidationException, IOException {
 		model = new DefaultListModel<String>();
 		CSVReader reader = new CSVReader(
-				new FileReader("C:\\Users\\cms\\eclipse-workspace\\bowl\\accumulatedStockCode.csv"));
+				new FileReader("C:\\Users\\iic\\eclipse-workspace\\bowl\\accumulatedStockCode.csv"));
 		String[] readNext;
 		int i = 0;
 		while ((readNext = reader.readNext()) != null) {
@@ -83,7 +83,7 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 		if (e.getSource() == addBtn) {
 			String inputText = inputField.getText();
 
-			String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCodeData.csv";
+			String file = "C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCodeData.csv";
 			CSVReader reader;
 			try {
 				reader = new CSVReader(new FileReader(file));
@@ -93,18 +93,18 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 						addItem();
 
 						FileWriter writer = new FileWriter(
-								"C:\\Users\\cms\\eclipse-workspace\\bowl\\" + readNext[1] + "userDetails.csv", false);
+								"C:\\Users\\iic\\eclipse-workspace\\bowl\\" + readNext[1] + "userDetails.csv", false);
 						writer.write("0" + "\n" + "0" + "\n" + "0" + "\n" + "0");
 						writer.close();
 
 						writer = new FileWriter(
-								"C:\\Users\\cms\\eclipse-workspace\\bowl\\" + readNext[1] + "transactionDetails.csv",
+								"C:\\Users\\iic\\eclipse-workspace\\bowl\\" + readNext[1] + "transactionDetails.csv",
 								false);
 						writer.write("0,0\n");
 						writer.close();
 
 						FileWriter writer3 = new FileWriter(
-								"C:\\Users\\cms\\eclipse-workspace\\bowl\\accumulatedStockCode.csv", true);
+								"C:\\Users\\iic\\eclipse-workspace\\bowl\\accumulatedStockCode.csv", true);
 						writer3.write(readNext[1] + "\n");
 						writer3.close();
 						return;
@@ -120,7 +120,7 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 				applyItem(selected);
 			
 				View.topPanel.removeAll();
-				DayChartPanel chartPanel = new DayChartPanel();				
+				DailyChartPanel chartPanel = new DailyChartPanel();				
 				View.topPanel.add(chartPanel);
 				
 				
@@ -147,12 +147,12 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 
 		String stockCode = (String) model.get(index);
 
-		FileWriter writer1 = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv", false);
+		FileWriter writer1 = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv", false);
 		writer1.write(stockCode);
 		writer1.close();
 
 		FileWriter writer2 = new FileWriter(
-				"C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "transactionDetails.csv", false);
+				"C:\\Users\\iic\\eclipse-workspace\\bowl\\" + stockCode + "transactionDetails.csv", false);
 		writer2.write("0,0\n");
 		writer2.close();
 
@@ -201,7 +201,7 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 			JTextField input = (JTextField) e.getSource();
 			String stockCode = input.getText();
 
-			String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCodeData.csv";
+			String file = "C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCodeData.csv";
 			CSVReader reader;
 			try {
 				reader = new CSVReader(new FileReader(file));

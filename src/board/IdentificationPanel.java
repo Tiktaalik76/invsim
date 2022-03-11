@@ -41,7 +41,7 @@ public class IdentificationPanel extends JPanel {
 
 	public IdentificationPanel() throws CsvValidationException, IOException {
 
-		IdentificationPanel.mStockCode = Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv",
+		IdentificationPanel.mStockCode = Tools.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv",
 				0, 0);
 
 		EtchedBorder eborder;
@@ -132,7 +132,7 @@ public class IdentificationPanel extends JPanel {
 
 					if (mStockCodeIsUpdated == 1) {
 						IdentificationPanel.mStockCode = Tools
-								.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
+								.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
 						IdentificationPanel.mStockCodeIsUpdated = 0;
 					}
 

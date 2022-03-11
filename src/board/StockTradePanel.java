@@ -33,8 +33,8 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 
 	public void init() {
 		inputQuantity = new JTextField(35);
-		buyBtn = new JButton("Buy");
-		sellBtn = new JButton("Sell");
+		buyBtn = new JButton("매수");
+		sellBtn = new JButton("매도");
 		guideLabel = new JLabel();
 		guideLabel.setText("수량");
 		guideLabel.setFont(new Font("Gothic", Font.ITALIC, 25));
@@ -70,16 +70,16 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 	public void mouseClicked(MouseEvent e) {
 		try {
 
-			String stockCodeFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";
+			String stockCodeFilePath = "C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv";
 			String mStockCode;
 			
 			mStockCode = Tools.readOneFactor(stockCodeFilePath, 0, 0);
 
-			String transactionDetailsFilePath1 = "C:\\Users\\cms\\eclipse-workspace\\bowl\\";
+			String transactionDetailsFilePath1 = "C:\\Users\\iic\\eclipse-workspace\\bowl\\";
 			String transactionDetailsFilePath2 = "transactionDetails.csv";
 			String transactionDetailsFilePath = transactionDetailsFilePath1 + mStockCode + transactionDetailsFilePath2;
 
-			String userDetailsFilePath1 = "C:\\Users\\cms\\eclipse-workspace\\bowl\\";
+			String userDetailsFilePath1 = "C:\\Users\\iic\\eclipse-workspace\\bowl\\";
 			String userDetailsFilePath2 = "userDetails.csv";
 			String userDetailsFilePath = userDetailsFilePath1 + mStockCode + userDetailsFilePath2;
 
@@ -89,7 +89,7 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 				int quantity = Integer.parseInt(inputQuantity.getText());
 
 				int 예수금 = Integer
-						.parseInt(Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", 0, 0));
+						.parseInt(Tools.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", 0, 0));
 				int 시장가 = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
 
 				if ((quantity > 0) || 예수금 > 시장가 * quantity) {
@@ -98,7 +98,7 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 
 					예수금 -= 시장가 * quantity;
 
-					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
+					writer = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", false);
 					writer.write(Integer.toString(예수금));
 					writer.close();
 
@@ -129,11 +129,11 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 					writer.close();
 
 					int 예수금 = Integer
-							.parseInt(Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", 0, 0));
+							.parseInt(Tools.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", 0, 0));
 
 					예수금 += 시장가 * quantity;
 
-					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
+					writer = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", false);
 					writer.write(Integer.toString(예수금));
 					writer.close();
 

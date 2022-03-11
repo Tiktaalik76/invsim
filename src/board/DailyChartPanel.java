@@ -34,7 +34,7 @@ import org.jsoup.select.Elements;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class DayChartPanel extends JPanel {
+public class DailyChartPanel extends JPanel {
 
 	public static int mStockCodeIsUpdated = 0;
 	public static String mStockCode;
@@ -44,10 +44,10 @@ public class DayChartPanel extends JPanel {
 	private static Date mEnd;
 	private static Date mStart;
 
-	public DayChartPanel() throws CsvValidationException, IOException {
+	public DailyChartPanel() throws CsvValidationException, IOException {
 
 		// crawl data
-		String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\historicaldata.csv";
+		String file = "C:\\Users\\iic\\eclipse-workspace\\bowl\\historicaldata.csv";
 		FileWriter writer = new FileWriter(file, false);
 		String historicalData = getHistoricalData();
 		writer.write(historicalData);
@@ -89,7 +89,7 @@ public class DayChartPanel extends JPanel {
 	}
 
 	private static OHLCDataItem[] getData() {
-		String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\historicaldata.csv";
+		String file = "C:\\Users\\iic\\eclipse-workspace\\bowl\\historicaldata.csv";
 		ArrayList<OHLCDataItem> dataItems = new ArrayList<OHLCDataItem>();
 
 		try {
@@ -175,11 +175,10 @@ public class DayChartPanel extends JPanel {
 		OHLCDataItem[] data = dataItems.toArray(new OHLCDataItem[dataItems.size()]);
 		return data;
 	}
-
 	private static String getHistoricalData() throws CsvValidationException, IOException {
 		String url1 = "https://finance.yahoo.com/quote/";
 		String url2 = "/history?p=";
-		String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";
+		String file = "C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv";
 
 		String stockCode = Tools.readOneFactor(file, 0, 0);
 

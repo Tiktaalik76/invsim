@@ -9,21 +9,22 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
 public class View {
-	String file = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";
+	String file = "C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv";
 	String stockCode;
 	String transactionDetailsFilePath;
 	public static int cash = 0;
 	public static JPanel topPanel = new JPanel();
 
-	@SuppressWarnings("removal")
 	public View() throws CsvValidationException, IOException {
-		
 			// 새로 시작할지 결정
 			int result = JOptionPane.showConfirmDialog(null, "새로 시작하시겠습니까?", "안내", JOptionPane.YES_NO_OPTION);
 			
@@ -32,10 +33,13 @@ public class View {
 			} else if (result == JOptionPane.YES_OPTION) {
 				while (true) {
 					this.stockCode = JOptionPane.showInputDialog("종목 코드를 입력하세요");
-
+					//null check
+					if (StringUtils.isEmpty(stockCode)) {
+						System.exit(0);
+					}
 					// 입력된 종목코드 검사
 					CSVReader reader1 = new CSVReader(
-							new FileReader("C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCodeData.csv"));
+							new FileReader("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCodeData.csv"));
 					String[] readNext;
 					int check = 0;
 					while ((readNext = reader1.readNext()) != null) {
@@ -49,7 +53,7 @@ public class View {
 					}
 
 					// 이전 데이터 삭제
-					Tools.deleteInternalFiles("C:\\Users\\cms\\eclipse-workspace\\bowl");
+					Tools.deleteInternalFiles("C:\\Users\\iic\\eclipse-workspace\\bowl");
 
 					// 종목코드 저장
 					FileWriter writer = new FileWriter(file, false);
@@ -57,21 +61,21 @@ public class View {
 					writer.close();
 
 					// 빈 데이터 생성
-					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "userDetails.csv",
+					writer = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\" + stockCode + "userDetails.csv",
 							false);
 					writer.write("0" + "\n" + "0" + "\n" + "0" + "\n" + "0");
 					writer.close();
 					
 					writer = new FileWriter(
-							"C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "transactionDetails.csv", false);
+							"C:\\Users\\iic\\eclipse-workspace\\bowl\\" + stockCode + "transactionDetails.csv", false);
 					writer.write("0,0\n");
 					writer.close();
 					
-					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\accumulatedStockCode.csv", false);
+					writer = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\accumulatedStockCode.csv", false);
 					writer.write(stockCode + "\n");
 					writer.close();
 					
-					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
+					writer = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", false);
 					writer.write("100000000");
 					writer.close();
 					
@@ -82,7 +86,7 @@ public class View {
 			} else {
 				stockCode = Tools.readOneFactor(file, 0, 0);
 			}
-			transactionDetailsFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode
+			transactionDetailsFilePath = "C:\\Users\\iic\\eclipse-workspace\\bowl\\" + stockCode
 					+ "transactionDetails.csv";
 
 			EtchedBorder eborder;
@@ -107,7 +111,7 @@ public class View {
 			tabPane.setSize(700, 430);
 			
 			SecChartPanel secChartPanel = new SecChartPanel();
-			DayChartPanel dayChartPanel = new DayChartPanel();
+			DailyChartPanel dayChartPanel = new DailyChartPanel();
 			topPanel.add(dayChartPanel);
 			tabPane.addTab("실시간", secChartPanel);
 			tabPane.addTab("일간", topPanel);

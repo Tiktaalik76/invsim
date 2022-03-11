@@ -25,8 +25,8 @@ public class InfoDisplayPanel extends JPanel {
 	JLabel priceGuideLabel = new JLabel();
 	JTextField priceLabel = new JTextField();
 	
-	String stockCodeFilePath = "C:\\Users\\cms\\eclipse-workspace\\bowl\\stockCode.csv";
-	String cashFilePath =  "C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv";
+	String stockCodeFilePath = "C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv";
+	String cashFilePath =  "C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv";
 	
 	public InfoDisplayPanel() throws CsvValidationException, IOException {
 		
