@@ -55,7 +55,7 @@ public class SecChartPanel extends JPanel {
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		add(chartPanel);
 
-		// stockCode ÀÎ½Ä
+		// stockCode ì¸ì‹
 		mStockCode = Tools.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv", 0, 0);
 
 		Thread updateThread = new Thread(new Update());
@@ -72,8 +72,8 @@ public class SecChartPanel extends JPanel {
 					float tempFloat = Float.parseFloat(tempString);
 					float[] tempArray = { tempFloat };
 
-					mDataSet.advanceTime(); // xÃà ½Ã°£À» ÇÏ³ªÃß°¡
-					mDataSet.appendData(tempArray);// Â÷Æ®¿¡ »õ·Î¿î yÃà µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ®
+					mDataSet.advanceTime(); // xì¶• ì‹œê°„ì„ í•˜ë‚˜ì¶”ê°€
+					mDataSet.appendData(tempArray);// ì°¨íŠ¸ì— ìƒˆë¡œìš´ yì¶• ë°ì´í„° ì—…ë°ì´íŠ¸
 					
 					Thread.sleep(1000);
 

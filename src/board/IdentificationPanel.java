@@ -18,23 +18,23 @@ public class IdentificationPanel extends JPanel {
 	public static String mStockCode;
 	public static int mStockCodeIsUpdated = 0;
 
-	JLabel mÆò°¡¼ÕÀÍGuideLabel = new JLabel();
-	JLabel mÆò°¡¼ÕÀÍLabel = new JLabel();
-	JLabel mº¸À¯¼ö·®GuideLabel = new JLabel();
-	JLabel m¸Åµµ°¡´É¼ö·®GuideLabel = new JLabel();
-	JLabel m¼ÕÀÍºĞ±âÁ¡GuideLabel = new JLabel();
-	JLabel m¼öÀÍ·üGuideLabel = new JLabel();
-	JLabel m¼öÀÍ·üLabel = new JLabel();
-	JLabel mÆò°¡±İ¾×GuideLabel = new JLabel();
-	JLabel mÆò°¡±İ¾×Label = new JLabel();
-	JLabel m¸Å¼ö±İ¾×GuideLabel = new JLabel();
-	JLabel mÇöÀç°¡GuideLabel = new JLabel();
-	JLabel mÇöÀç°¡Label = new JLabel();
-	JLabel mº¸À¯¼ö·®Label = new JLabel();
-	JLabel m¸Åµµ°¡´É¼ö·®Label = new JLabel();
-	JLabel m¸Å¼ö±İ¾×Label = new JLabel();
-	JLabel m¼ÕÀÍºĞ±âÁ¡Label = new JLabel();
-	JLabel[] labelList = { mº¸À¯¼ö·®Label, m¸Åµµ°¡´É¼ö·®Label, m¸Å¼ö±İ¾×Label, m¼ÕÀÍºĞ±âÁ¡Label };
+	JLabel mí‰ê°€ì†ìµGuideLabel = new JLabel();
+	JLabel mí‰ê°€ì†ìµLabel = new JLabel();
+	JLabel më³´ìœ ìˆ˜ëŸ‰GuideLabel = new JLabel();
+	JLabel më§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰GuideLabel = new JLabel();
+	JLabel mì†ìµë¶„ê¸°ì GuideLabel = new JLabel();
+	JLabel mìˆ˜ìµë¥ GuideLabel = new JLabel();
+	JLabel mìˆ˜ìµë¥ Label = new JLabel();
+	JLabel mí‰ê°€ê¸ˆì•¡GuideLabel = new JLabel();
+	JLabel mí‰ê°€ê¸ˆì•¡Label = new JLabel();
+	JLabel më§¤ìˆ˜ê¸ˆì•¡GuideLabel = new JLabel();
+	JLabel mí˜„ì¬ê°€GuideLabel = new JLabel();
+	JLabel mí˜„ì¬ê°€Label = new JLabel();
+	JLabel më³´ìœ ìˆ˜ëŸ‰Label = new JLabel();
+	JLabel më§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰Label = new JLabel();
+	JLabel më§¤ìˆ˜ê¸ˆì•¡Label = new JLabel();
+	JLabel mì†ìµë¶„ê¸°ì Label = new JLabel();
+	JLabel[] labelList = { më³´ìœ ìˆ˜ëŸ‰Label, më§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰Label, më§¤ìˆ˜ê¸ˆì•¡Label, mì†ìµë¶„ê¸°ì Label };
 	JPanel setPanel = new JPanel();
 
 	JLabel stockNameLabel = new JLabel();
@@ -51,37 +51,37 @@ public class IdentificationPanel extends JPanel {
 		setPanel.setLayout(new GridLayout(2, 4));
 		setPanel.setSize(700, 120);
 
-		setPanel.add(mÆò°¡¼ÕÀÍGuideLabel);
-		mÆò°¡¼ÕÀÍGuideLabel.setText("Æò°¡¼ÕÀÍ");
-		setPanel.add(mÆò°¡¼ÕÀÍLabel);
+		setPanel.add(mí‰ê°€ì†ìµGuideLabel);
+		mí‰ê°€ì†ìµGuideLabel.setText("í‰ê°€ì†ìµ");
+		setPanel.add(mí‰ê°€ì†ìµLabel);
 
-		setPanel.add(mº¸À¯¼ö·®GuideLabel);
-		mº¸À¯¼ö·®GuideLabel.setText("º¸À¯¼ö·®");
-		setPanel.add(mº¸À¯¼ö·®Label);
+		setPanel.add(më³´ìœ ìˆ˜ëŸ‰GuideLabel);
+		më³´ìœ ìˆ˜ëŸ‰GuideLabel.setText("ë³´ìœ ìˆ˜ëŸ‰");
+		setPanel.add(më³´ìœ ìˆ˜ëŸ‰Label);
 
-		setPanel.add(m¸Åµµ°¡´É¼ö·®GuideLabel);
-		m¸Åµµ°¡´É¼ö·®GuideLabel.setText("¸Åµµ°¡´É¼ö·®");
-		setPanel.add(m¸Åµµ°¡´É¼ö·®Label);
+		setPanel.add(më§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰GuideLabel);
+		më§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰GuideLabel.setText("ë§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰");
+		setPanel.add(më§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰Label);
 
-		setPanel.add(m¼ÕÀÍºĞ±âÁ¡GuideLabel);
-		m¼ÕÀÍºĞ±âÁ¡GuideLabel.setText("¼ÕÀÍºĞ±âÁ¡");
-		setPanel.add(m¼ÕÀÍºĞ±âÁ¡Label);
+		setPanel.add(mì†ìµë¶„ê¸°ì GuideLabel);
+		mì†ìµë¶„ê¸°ì GuideLabel.setText("ì†ìµë¶„ê¸°ì ");
+		setPanel.add(mì†ìµë¶„ê¸°ì Label);
 
-		setPanel.add(m¼öÀÍ·üGuideLabel);
-		m¼öÀÍ·üGuideLabel.setText("¼öÀÍ·ü");
-		setPanel.add(m¼öÀÍ·üLabel);
+		setPanel.add(mìˆ˜ìµë¥ GuideLabel);
+		mìˆ˜ìµë¥ GuideLabel.setText("ìˆ˜ìµë¥ ");
+		setPanel.add(mìˆ˜ìµë¥ Label);
 
-		setPanel.add(mÆò°¡±İ¾×GuideLabel);
-		mÆò°¡±İ¾×GuideLabel.setText("Æò°¡±İ¾×");
-		setPanel.add(mÆò°¡±İ¾×Label);
+		setPanel.add(mí‰ê°€ê¸ˆì•¡GuideLabel);
+		mí‰ê°€ê¸ˆì•¡GuideLabel.setText("í‰ê°€ê¸ˆì•¡");
+		setPanel.add(mí‰ê°€ê¸ˆì•¡Label);
 
-		setPanel.add(m¸Å¼ö±İ¾×GuideLabel);
-		m¸Å¼ö±İ¾×GuideLabel.setText("¸Å¼ö±İ¾×");
-		setPanel.add(m¸Å¼ö±İ¾×Label);
+		setPanel.add(më§¤ìˆ˜ê¸ˆì•¡GuideLabel);
+		më§¤ìˆ˜ê¸ˆì•¡GuideLabel.setText("ë§¤ìˆ˜ê¸ˆì•¡");
+		setPanel.add(më§¤ìˆ˜ê¸ˆì•¡Label);
 
-		setPanel.add(mÇöÀç°¡GuideLabel);
-		mÇöÀç°¡GuideLabel.setText("ÇöÀç°¡");
-		setPanel.add(mÇöÀç°¡Label);
+		setPanel.add(mí˜„ì¬ê°€GuideLabel);
+		mí˜„ì¬ê°€GuideLabel.setText("í˜„ì¬ê°€");
+		setPanel.add(mí˜„ì¬ê°€Label);
 
 		stockNameLabel.setText(Crawl.getStockName(mStockCode) + "(" + mStockCode + ")");
 		stockNameLabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -113,21 +113,21 @@ public class IdentificationPanel extends JPanel {
 						temp.add(detailItem[0]);
 					}
 
-					mÇöÀç°¡Label.setText(Crawl.getPrice(mStockCode, 1));
-					int ½ÃÀå°¡ = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
-					String Æò°¡±İ¾× = Integer.toString(½ÃÀå°¡ * Integer.parseInt(temp.get(1)));
-					mÆò°¡±İ¾×Label.setText(Æò°¡±İ¾×);
+					mí˜„ì¬ê°€Label.setText(Crawl.getPrice(mStockCode, 1));
+					int ì‹œì¥ê°€ = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
+					String í‰ê°€ê¸ˆì•¡ = Integer.toString(ì‹œì¥ê°€ * Integer.parseInt(temp.get(1)));
+					mí‰ê°€ê¸ˆì•¡Label.setText(í‰ê°€ê¸ˆì•¡);
 
-					String Æò°¡¼ÕÀÍ = Integer.toString(½ÃÀå°¡ * Integer.parseInt(temp.get(1)) - Integer.parseInt(temp.get(2)));
-					mÆò°¡¼ÕÀÍLabel.setText(Æò°¡¼ÕÀÍ);
+					String í‰ê°€ì†ìµ = Integer.toString(ì‹œì¥ê°€ * Integer.parseInt(temp.get(1)) - Integer.parseInt(temp.get(2)));
+					mí‰ê°€ì†ìµLabel.setText(í‰ê°€ì†ìµ);
 
 					if (temp.get(1).equals("0")) {
-						m¼öÀÍ·üLabel.setText("0.00%");
+						mìˆ˜ìµë¥ Label.setText("0.00%");
 					} else {
 						DecimalFormat df = new DecimalFormat("0.00");
-						String ¼öÀÍ·ü = df.format((½ÃÀå°¡ * Integer.parseInt(temp.get(1)) - Integer.parseInt(temp.get(2)))
+						String ìˆ˜ìµë¥  = df.format((ì‹œì¥ê°€ * Integer.parseInt(temp.get(1)) - Integer.parseInt(temp.get(2)))
 								/ Double.parseDouble(temp.get(2)) * 100);
-						m¼öÀÍ·üLabel.setText(¼öÀÍ·ü);
+						mìˆ˜ìµë¥ Label.setText(ìˆ˜ìµë¥ );
 					}
 
 					if (mStockCodeIsUpdated == 1) {

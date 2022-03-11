@@ -33,10 +33,10 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 
 	public void init() {
 		inputQuantity = new JTextField(35);
-		buyBtn = new JButton("¸Å¼ö");
-		sellBtn = new JButton("¸Åµµ");
+		buyBtn = new JButton("ë§¤ìˆ˜");
+		sellBtn = new JButton("ë§¤ë„");
 		guideLabel = new JLabel();
-		guideLabel.setText("¼ö·®");
+		guideLabel.setText("ìˆ˜ëŸ‰");
 		guideLabel.setFont(new Font("Gothic", Font.ITALIC, 25));
 
 		inputQuantity.addKeyListener(this);
@@ -88,25 +88,25 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 			if (e.getSource() == buyBtn) {
 				int quantity = Integer.parseInt(inputQuantity.getText());
 
-				int ¿¹¼ö±İ = Integer
+				int ì˜ˆìˆ˜ê¸ˆ = Integer
 						.parseInt(Tools.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", 0, 0));
-				int ½ÃÀå°¡ = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
+				int ì‹œì¥ê°€ = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
 
-				if ((quantity > 0) || ¿¹¼ö±İ > ½ÃÀå°¡ * quantity) {
-					writer.write(½ÃÀå°¡ + "," + "+" + quantity + "\n");
+				if ((quantity > 0) || ì˜ˆìˆ˜ê¸ˆ > ì‹œì¥ê°€ * quantity) {
+					writer.write(ì‹œì¥ê°€ + "," + "+" + quantity + "\n");
 					writer.close();
 
-					¿¹¼ö±İ -= ½ÃÀå°¡ * quantity;
+					ì˜ˆìˆ˜ê¸ˆ -= ì‹œì¥ê°€ * quantity;
 
 					writer = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", false);
-					writer.write(Integer.toString(¿¹¼ö±İ));
+					writer.write(Integer.toString(ì˜ˆìˆ˜ê¸ˆ));
 					writer.close();
 
 					InfoDisplayPanel.mCashIsUpdated = 1;
 
-					JOptionPane.showMessageDialog(null, "¸Å¼ö°¡ Ã¼°áµÇ¾ú½À´Ï´Ù", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ë§¤ìˆ˜ê°€ ì²´ê²°ë˜ì—ˆìŠµë‹ˆë‹¤", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null, "¼ö·®À» ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä" + "\n" + "¼ö·®Àº ¾çÀÇ Á¤¼ö" + "\n", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ìˆ˜ëŸ‰ì„ ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”" + "\n" + "ìˆ˜ëŸ‰ì€ ì–‘ì˜ ì •ìˆ˜" + "\n", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 
@@ -115,70 +115,70 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 
 				CSVReader reader1 = new CSVReader(new FileReader(transactionDetailsFilePath));
 				String[] readNext;
-				int ¼ö·®;
-				int ÃÑ¼ö·® = 0;
+				int ìˆ˜ëŸ‰;
+				int ì´ìˆ˜ëŸ‰ = 0;
 				while ((readNext = reader1.readNext()) != null) {
-					¼ö·® = Integer.parseInt(readNext[1]);
-					ÃÑ¼ö·® += ¼ö·®;
+					ìˆ˜ëŸ‰ = Integer.parseInt(readNext[1]);
+					ì´ìˆ˜ëŸ‰ += ìˆ˜ëŸ‰;
 				}
 
-				if (ÃÑ¼ö·® >= quantity) {
-					int ½ÃÀå°¡ = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
-					writer.write(½ÃÀå°¡ + "," + "-" + quantity + "\n");
+				if (ì´ìˆ˜ëŸ‰ >= quantity) {
+					int ì‹œì¥ê°€ = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
+					writer.write(ì‹œì¥ê°€ + "," + "-" + quantity + "\n");
 					writer.close();
 
-					int ¿¹¼ö±İ = Integer
+					int ì˜ˆìˆ˜ê¸ˆ = Integer
 							.parseInt(Tools.readOneFactor("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", 0, 0));
 
-					¿¹¼ö±İ += ½ÃÀå°¡ * quantity;
+					ì˜ˆìˆ˜ê¸ˆ += ì‹œì¥ê°€ * quantity;
 
 					writer = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\cash.csv", false);
-					writer.write(Integer.toString(¿¹¼ö±İ));
+					writer.write(Integer.toString(ì˜ˆìˆ˜ê¸ˆ));
 					writer.close();
 
 					InfoDisplayPanel.mCashIsUpdated = 1;
 
-					JOptionPane.showMessageDialog(null, "¸Å¼ö°¡ Ã¼°áµÇ¾ú½À´Ï´Ù", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ë§¤ìˆ˜ê°€ ì²´ê²°ë˜ì—ˆìŠµë‹ˆë‹¤", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null, "¼ö·®À» ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä" + "\n" + "¼ö·®Àº ¾çÀÇ Á¤¼ö" + "\n", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ìˆ˜ëŸ‰ì„ ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”" + "\n" + "ìˆ˜ëŸ‰ì€ ì–‘ì˜ ì •ìˆ˜" + "\n", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 
-			int °Å·¡±İ¾× = 0;
-			int ¼ö·® = 0;
-			int ÃÑº¸À¯¼ö·® = 0;
-			int ¸Å¼ö±İ¾× = 0;
-			int ¼ÕÀÍºĞ±âÁ¡ = 0;
-			int ¸Åµµ°¡´É¼ö·® = 0;
+			int ê±°ë˜ê¸ˆì•¡ = 0;
+			int ìˆ˜ëŸ‰ = 0;
+			int ì´ë³´ìœ ìˆ˜ëŸ‰ = 0;
+			int ë§¤ìˆ˜ê¸ˆì•¡ = 0;
+			int ì†ìµë¶„ê¸°ì  = 0;
+			int ë§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰ = 0;
 
 			CSVReader reader2 = new CSVReader(new FileReader(transactionDetailsFilePath));
 			String[] readNext;
 			while ((readNext = reader2.readNext()) != null) {
 
-				°Å·¡±İ¾× = Integer.parseInt(readNext[0]);
-				¼ö·® = Integer.parseInt(readNext[1]);
-				// ¼ö·® ºÎÈ£
+				ê±°ë˜ê¸ˆì•¡ = Integer.parseInt(readNext[0]);
+				ìˆ˜ëŸ‰ = Integer.parseInt(readNext[1]);
+				// ìˆ˜ëŸ‰ ë¶€í˜¸
 				// buy : +
 				// sell : -
 
-				ÃÑº¸À¯¼ö·® += ¼ö·®;
-				¸Å¼ö±İ¾× += °Å·¡±İ¾× * ¼ö·®;
+				ì´ë³´ìœ ìˆ˜ëŸ‰ += ìˆ˜ëŸ‰;
+				ë§¤ìˆ˜ê¸ˆì•¡ += ê±°ë˜ê¸ˆì•¡ * ìˆ˜ëŸ‰;
 
-				if (ÃÑº¸À¯¼ö·® == 0) {
-					//°Å·¡ ³»¿ª ÃÊ±âÈ­
-					ÃÑº¸À¯¼ö·® = 0;
-					¸Å¼ö±İ¾× = 0;
-					¼ÕÀÍºĞ±âÁ¡ = 0;
-					¸Åµµ°¡´É¼ö·® = 0;
+				if (ì´ë³´ìœ ìˆ˜ëŸ‰ == 0) {
+					//ê±°ë˜ ë‚´ì—­ ì´ˆê¸°í™”
+					ì´ë³´ìœ ìˆ˜ëŸ‰ = 0;
+					ë§¤ìˆ˜ê¸ˆì•¡ = 0;
+					ì†ìµë¶„ê¸°ì  = 0;
+					ë§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰ = 0;
 
 				} else {
-					¼ÕÀÍºĞ±âÁ¡ = ¸Å¼ö±İ¾× / ÃÑº¸À¯¼ö·®;
-					¸Åµµ°¡´É¼ö·® = ÃÑº¸À¯¼ö·®;
+					ì†ìµë¶„ê¸°ì  = ë§¤ìˆ˜ê¸ˆì•¡ / ì´ë³´ìœ ìˆ˜ëŸ‰;
+					ë§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰ = ì´ë³´ìœ ìˆ˜ëŸ‰;
 				}
 			}
 
 			writer = new FileWriter(userDetailsFilePath, false);
-			writer.write(ÃÑº¸À¯¼ö·® + "\n" + ¸Åµµ°¡´É¼ö·® + "\n" + ¸Å¼ö±İ¾× + "\n" + ¼ÕÀÍºĞ±âÁ¡);
+			writer.write(ì´ë³´ìœ ìˆ˜ëŸ‰ + "\n" + ë§¤ë„ê°€ëŠ¥ìˆ˜ëŸ‰ + "\n" + ë§¤ìˆ˜ê¸ˆì•¡ + "\n" + ì†ìµë¶„ê¸°ì );
 			writer.close();
 
 		} catch (CsvValidationException e1) {

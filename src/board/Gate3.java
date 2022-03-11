@@ -25,10 +25,10 @@ public class Gate3 implements MouseListener {
 	JLabel pwLabel = new JLabel();
 	JTextField createID = new JTextField();
 	JTextField createPW = new JTextField();
-	JButton regBtn = new JButton("°¡ÀÔ");
+	JButton regBtn = new JButton("ê°€ì…");
 	JLabel explanation = new JLabel();
 	String file = "C:\\Users\\iic\\Desktop\\idpw.csv";
-	JFrame frame = new JFrame("È¸¿ø°¡ÀÔ");
+	JFrame frame = new JFrame("íšŒì›ê°€ì…");
 
 	public Gate3() {
 
@@ -47,7 +47,7 @@ public class Gate3 implements MouseListener {
 		idLabel.setLocation(10, 20);
 		idLabel.setSize(90, 30);
 		idLabel.setFont(new Font("Gothic", Font.PLAIN, 20));
-		idLabel.setText("¾ÆÀÌµğ");
+		idLabel.setText("ì•„ì´ë””");
 		idLabel.setHorizontalAlignment(JLabel.CENTER);
 
 		createID.setLocation(110, 20);
@@ -57,7 +57,7 @@ public class Gate3 implements MouseListener {
 		pwLabel.setLocation(10, 50);
 		pwLabel.setSize(90, 30);
 		pwLabel.setFont(new Font("Gothic", Font.PLAIN, 20));
-		pwLabel.setText("ºñ¹Ğ¹øÈ£");
+		pwLabel.setText("ë¹„ë°€ë²ˆí˜¸");
 		pwLabel.setHorizontalAlignment(JLabel.CENTER);
 
 		createPW.setLocation(110, 50);
@@ -70,7 +70,7 @@ public class Gate3 implements MouseListener {
 		regBtn.addMouseListener(this);
 
 		explanation.setText(
-				"<html>1. ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£´Â 1~12ÀÚ¸®·Î ÀÔ·ÂÇÏ¼¼¿ä. <br><br>2. »ç¿ëÇÒ ¼ö ¾ø´Â ¹®ÀÚ´Â ´ÙÀ½°ú °°½À´Ï´Ù. <br>&nbsp&nbsp&nbsp&nbsp°ø¹é, ÅÇ, * , \\ , : , \" , &lt , &gt , | <br><br> 3. ÀüÈ­¹øÈ£´Â ¾ÆÀÌµğ ºĞ½Ç ½Ã »ç¿ëµË´Ï´Ù. <br><br> 4. °³ÀÎÈ®ÀÎÁú¹®Àº ¾ÆÀÌµğ ºĞ½Ç ½Ã »ç¿ëµË´Ï´Ù.<br><br> 5. ÀüÈ­¹øÈ£´Â \"-\"¾øÀÌ ÀÔ·ÂÇÏ¼¼¿ä </html>");
+				"<html>1. ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ëŠ” 1~12ìë¦¬ë¡œ ì…ë ¥í•˜ì„¸ìš”. <br><br>2. ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ë¬¸ìëŠ” ë‹¤ìŒê³¼ ê°™ìŠµë‹ˆë‹¤. <br>&nbsp&nbsp&nbsp&nbspê³µë°±, íƒ­, * , \\ , : , \" , &lt , &gt , | <br><br> 3. ì „í™”ë²ˆí˜¸ëŠ” ì•„ì´ë”” ë¶„ì‹¤ ì‹œ ì‚¬ìš©ë©ë‹ˆë‹¤. <br><br> 4. ê°œì¸í™•ì¸ì§ˆë¬¸ì€ ì•„ì´ë”” ë¶„ì‹¤ ì‹œ ì‚¬ìš©ë©ë‹ˆë‹¤.<br><br> 5. ì „í™”ë²ˆí˜¸ëŠ” \"-\"ì—†ì´ ì…ë ¥í•˜ì„¸ìš” </html>");
 		explanation.setLocation(10, 20);
 		explanation.setSize(400, 380);
 		explanation.setFont(new Font("Gothic", Font.PLAIN, 15));
@@ -90,22 +90,22 @@ public class Gate3 implements MouseListener {
 
 					while ((bowl = reader.readNext()) != null) {
 						if (bowl[0].equals(id)) {
-							JOptionPane.showMessageDialog(null, "Áßº¹µÇ´Â ¾ÆÀÌµğ°¡ ÀÖ½À´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ì¤‘ë³µë˜ëŠ” ì•„ì´ë””ê°€ ìˆìŠµë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 							return;
 						}
 					}
 
-					String pwCheck = JOptionPane.showInputDialog("ºñ¹Ğ¹øÈ£ ´Ù½Ã ÇÑ¹ø ÀÔ·ÂÇÏ¼¼¿ä");
+					String pwCheck = JOptionPane.showInputDialog("ë¹„ë°€ë²ˆí˜¸ ë‹¤ì‹œ í•œë²ˆ ì…ë ¥í•˜ì„¸ìš”");
 				
 					if (StringUtils.isEmpty(pwCheck)) {
-						JOptionPane.showMessageDialog(null, "Ãë¼ÒÇß½À´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(null, "ì·¨ì†Œí–ˆìŠµë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 					}
 					else if (pwCheck.equals(pw)) {
 						new Gate4(id, pw);
 						frame.dispose();
 					}
 					else {
-					JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£°¡ ´Ù¸¨´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ê°€ ë‹¤ë¦…ë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 					}
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
@@ -118,7 +118,7 @@ public class Gate3 implements MouseListener {
 				}
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£¿¡ °ø¹é, ÅÇ, *, \\, :, \", <, >, | ÀÌ Æ÷ÇÔµÇ¾î ÀÖ½À´Ï´Ù.", "¾È³»",JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ì— ê³µë°±, íƒ­, *, \\, :, \", <, >, | ì´ í¬í•¨ë˜ì–´ ìˆìŠµë‹ˆë‹¤.", "ì•ˆë‚´",JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 		}

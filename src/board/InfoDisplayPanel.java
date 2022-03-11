@@ -60,12 +60,12 @@ public class InfoDisplayPanel extends JPanel {
 		cashPanel.setBorder(eborder);
 		cashPanel.setBackground(Color.WHITE);
 		
-		cashGuideLabel.setText("¿¹¼ö±Ý");
+		cashGuideLabel.setText("ì˜ˆìˆ˜ê¸ˆ");
 		cashLabel.setText(cash);
 
 		priceGuideLabel.setLocation(0, 310);
 		priceGuideLabel.setSize(80, 60);
-		priceGuideLabel.setText("½ÃÀå°¡");
+		priceGuideLabel.setText("ì‹œìž¥ê°€");
 		priceGuideLabel.setFont(new Font("Gothic", Font.ITALIC, 25));
 
 		priceLabel.setLocation(90, 310);

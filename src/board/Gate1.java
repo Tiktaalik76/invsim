@@ -36,7 +36,7 @@ public class Gate1 implements MouseListener {
 	private JPanel topPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel();
 	private String file = "C:\\Users\\iic\\Desktop\\idpw.csv";
-	private JFrame frame = new JFrame("ÁÖ½Ä¸ğÀÇÅõÀÚ");
+	private JFrame frame = new JFrame("ì£¼ì‹ëª¨ì˜íˆ¬ì");
 	
 	public Gate1() {
 
@@ -56,7 +56,7 @@ public class Gate1 implements MouseListener {
 		topPanel.setLayout(new GridLayout());
 		title.setFont(new Font("Gothic", Font.PLAIN, 60));
 		title.setHorizontalAlignment(JLabel.CENTER);
-		title.setText("°³ÀÎ ÁÖ½Ä ÅõÀÚ ½Ã¹Ä·¹ÀÌÅÍ");
+		title.setText("ê°œì¸ ì£¼ì‹ íˆ¬ì ì‹œë®¬ë ˆì´í„°");
 		topPanel.add(title);
 		frame.add(topPanel);
 
@@ -71,10 +71,10 @@ public class Gate1 implements MouseListener {
 		idField = new JTextField();
 		JLabel pwGuide = new JLabel();
 		pwField = new JTextField();
-		loginBtn = new JButton("·Î±×ÀÎ");
-		findIDBtn = new JButton("¾ÆÀÌµğ Ã£±â");
-		findPWBtn = new JButton("ºñ¹Ğ¹øÈ£ Ã£±â");
-		registerBtn = new JButton("È¸¿ø °¡ÀÔ");
+		loginBtn = new JButton("ë¡œê·¸ì¸");
+		findIDBtn = new JButton("ì•„ì´ë”” ì°¾ê¸°");
+		findPWBtn = new JButton("ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°");
+		registerBtn = new JButton("íšŒì› ê°€ì…");
 
 		loginBtn.addMouseListener(this);
 		findIDBtn.addMouseListener(this);
@@ -85,7 +85,7 @@ public class Gate1 implements MouseListener {
 		idGuide.setLocation(10, 20);
 		idGuide.setSize(90, 30);
 		idGuide.setFont(new Font("Gothic", Font.PLAIN, 20));
-		idGuide.setText("¾ÆÀÌµğ");
+		idGuide.setText("ì•„ì´ë””");
 		idGuide.setHorizontalAlignment(JLabel.CENTER);
 
 		bottomPanel.add(idField);
@@ -97,7 +97,7 @@ public class Gate1 implements MouseListener {
 		pwGuide.setLocation(10, 50);
 		pwGuide.setSize(90, 30);
 		pwGuide.setFont(new Font("Gothic", Font.PLAIN, 20));
-		pwGuide.setText("ºñ¹Ğ¹øÈ£");
+		pwGuide.setText("ë¹„ë°€ë²ˆí˜¸");
 		pwGuide.setHorizontalAlignment(JLabel.CENTER);
 
 		bottomPanel.add(pwField);
@@ -154,7 +154,7 @@ public class Gate1 implements MouseListener {
 				e1.printStackTrace();
 			}
 
-			JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ/ºñ¹Ğ¹øÈ£ Æ²·È½À´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ í‹€ë ¸ìŠµë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 
 		}
 		// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -164,31 +164,31 @@ public class Gate1 implements MouseListener {
 		// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		else if (e.getSource() == findIDBtn) {
 			try {
-				// ÀüÈ­¹øÈ£ Ã¼Å·
+				// ì „í™”ë²ˆí˜¸ ì²´í‚¹
 				int i = 0;
-				String question = JOptionPane.showInputDialog("ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+				String question = JOptionPane.showInputDialog("ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 				
 				if(StringUtils.isEmpty(question)) {
-					JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ Ã£±â¸¦ Ãë¼ÒÇÕ´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì•„ì´ë”” ì°¾ê¸°ë¥¼ ì·¨ì†Œí•©ë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 					i = 1;
 				}
 
 				else if (question.equals("")) {
-					JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£¸¦ ´Ù½Ã È®ÀÎÇÏ¼¼¿ä", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì „í™”ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ í™•ì¸í•˜ì„¸ìš”", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 					i = 1;
 				}
 
-				else if (i == 1){ // ÀüÈ­¹øÈ£ Ã¼Å·ÇÏ´Â Á¶°Ç¹® »ğÀÔ Áö±İÀº ÀÓ½Ã·Î ¸¸µé¾î ³õÀ½
+				else if (i == 1){ // ì „í™”ë²ˆí˜¸ ì²´í‚¹í•˜ëŠ” ì¡°ê±´ë¬¸ ì‚½ì… ì§€ê¸ˆì€ ì„ì‹œë¡œ ë§Œë“¤ì–´ ë†“ìŒ
 					CSVReader reader = new CSVReader(new FileReader(file));
 					String[] bowl;
 					while ((bowl = reader.readNext()) != null) {
 						if (question.equals(bowl[2]))
-							JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ´Â \"" + bowl[0] +"\" ÀÔ´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ì•„ì´ë””ëŠ” \"" + bowl[0] +"\" ì…ë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 						i = 1;
 					}
 				}
 				if (i == 0) {
-					JOptionPane.showMessageDialog(null, "È¸¿øÁ¤º¸°¡ ¾ø½À´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "íšŒì›ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 				}
 
 			} catch (CsvValidationException | IOException e1) {

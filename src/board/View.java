@@ -25,19 +25,19 @@ public class View {
 	public static JPanel topPanel = new JPanel();
 
 	public View() throws CsvValidationException, IOException {
-			// »õ·Î ½ÃÀÛÇÒÁö °áÁ¤
-			int result = JOptionPane.showConfirmDialog(null, "»õ·Î ½ÃÀÛÇÏ½Ã°Ú½À´Ï±î?", "¾È³»", JOptionPane.YES_NO_OPTION);
+			// ìƒˆë¡œ ì‹œì‘í• ì§€ ê²°ì •
+			int result = JOptionPane.showConfirmDialog(null, "ìƒˆë¡œ ì‹œì‘í•˜ì‹œê² ìŠµë‹ˆê¹Œ?", "ì•ˆë‚´", JOptionPane.YES_NO_OPTION);
 			
 			if (result == JOptionPane.CLOSED_OPTION) {
 				System.exit(0);
 			} else if (result == JOptionPane.YES_OPTION) {
 				while (true) {
-					this.stockCode = JOptionPane.showInputDialog("Á¾¸ñ ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+					this.stockCode = JOptionPane.showInputDialog("ì¢…ëª© ì½”ë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 					//null check
 					if (StringUtils.isEmpty(stockCode)) {
 						System.exit(0);
 					}
-					// ÀÔ·ÂµÈ Á¾¸ñÄÚµå °Ë»ç
+					// ì…ë ¥ëœ ì¢…ëª©ì½”ë“œ ê²€ì‚¬
 					CSVReader reader1 = new CSVReader(
 							new FileReader("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCodeData.csv"));
 					String[] readNext;
@@ -52,15 +52,15 @@ public class View {
 						continue;
 					}
 
-					// ÀÌÀü µ¥ÀÌÅÍ »èÁ¦
+					// ì´ì „ ë°ì´í„° ì‚­ì œ
 					Tools.deleteInternalFiles("C:\\Users\\iic\\eclipse-workspace\\bowl");
 
-					// Á¾¸ñÄÚµå ÀúÀå
+					// ì¢…ëª©ì½”ë“œ ì €ì¥
 					FileWriter writer = new FileWriter(file, false);
 					writer.write(stockCode);
 					writer.close();
 
-					// ºó µ¥ÀÌÅÍ »ı¼º
+					// ë¹ˆ ë°ì´í„° ìƒì„±
 					writer = new FileWriter("C:\\Users\\iic\\eclipse-workspace\\bowl\\" + stockCode + "userDetails.csv",
 							false);
 					writer.write("0" + "\n" + "0" + "\n" + "0" + "\n" + "0");
@@ -113,8 +113,8 @@ public class View {
 			SecChartPanel secChartPanel = new SecChartPanel();
 			DailyChartPanel dayChartPanel = new DailyChartPanel();
 			topPanel.add(dayChartPanel);
-			tabPane.addTab("½Ç½Ã°£", secChartPanel);
-			tabPane.addTab("ÀÏ°£", topPanel);
+			tabPane.addTab("ì‹¤ì‹œê°„", secChartPanel);
+			tabPane.addTab("ì¼ê°„", topPanel);
 			
 			InfoDisplayPanel infoDisplayPanel = new InfoDisplayPanel();
 			infoDisplayPanel.setLocation(720, 2);
@@ -126,8 +126,8 @@ public class View {
 			layer.setSize(1050, 600);
 			
 
-			// ÃÖ»óÀ§ÇÁ·¹ÀÓ ¼³Á¤
-			JFrame frame = new JFrame("ÁÖ½Ä¸ğÀÇÅõÀÚ");
+			// ìµœìƒìœ„í”„ë ˆì„ ì„¤ì •
+			JFrame frame = new JFrame("ì£¼ì‹ëª¨ì˜íˆ¬ì");
 			frame.setSize(1050, 600);
 			frame.setVisible(true);
 			frame.setLayout(null);
@@ -136,7 +136,7 @@ public class View {
 			frame.setLocationRelativeTo(null);
 			frame.add(layer);
 			
-			// ÄÄÆ÷³ÍÆ® ºÎÂø
+			// ì»´í¬ë„ŒíŠ¸ ë¶€ì°©
 			layer.add(stockTrade);
 			layer.add(identificationPanel);
 			layer.add(tabPane, new Integer(400));

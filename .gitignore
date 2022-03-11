@@ -12,6 +12,7 @@ tmp/
 *~.nib
 local.properties
 .settings/
+!.settings/org.eclipse.core.resources.prefs
 .loadpath
 .recommenders
 
@@ -116,7 +117,8 @@ replay_pid*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*

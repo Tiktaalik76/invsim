@@ -26,10 +26,10 @@ import com.opencsv.exceptions.CsvValidationException;
 
 public class Gate2 implements MouseListener {
 
-	private JButton newStart = new JButton("»õ·Î ½ÃÀÛ");
-	private JButton oldStart = new JButton("ÀÌ¾î¼­ ½ÃÀÛ");
-	private JButton withdrawalBtn = new JButton("È¸¿ø Å»Åğ");
-	private JButton changeBtn = new JButton("ºñ¹Ğ¹øÈ£ º¯°æ");
+	private JButton newStart = new JButton("ìƒˆë¡œ ì‹œì‘");
+	private JButton oldStart = new JButton("ì´ì–´ì„œ ì‹œì‘");
+	private JButton withdrawalBtn = new JButton("íšŒì› íƒˆí‡´");
+	private JButton changeBtn = new JButton("ë¹„ë°€ë²ˆí˜¸ ë³€ê²½");
 	private String file = "C:\\Users\\iic\\Desktop\\idpw.csv";
 	private String stockCodefile = "C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCode.csv";
 	private String id;
@@ -37,7 +37,7 @@ public class Gate2 implements MouseListener {
 	private JPanel topPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel();
 	private JLabel title = new JLabel();
-	JFrame frame = new JFrame("ÁÖ½Ä¸ğÀÇÅõÀÚ");
+	JFrame frame = new JFrame("ì£¼ì‹ëª¨ì˜íˆ¬ì");
 	private JLabel explanation = new JLabel();
 
 	public Gate2(String inputid, String inputpw) {
@@ -68,7 +68,7 @@ public class Gate2 implements MouseListener {
 		title.setSize(800, 100);
 		title.setFont(new Font("Gothic", Font.PLAIN, 55));
 		title.setHorizontalAlignment(JLabel.CENTER);
-		title.setText("'" + id + "'" + "´Ô ¾È³çÇÏ¼¼¿ä.");
+		title.setText("'" + id + "'" + "ë‹˜ ì•ˆë…•í•˜ì„¸ìš”.");
 		topPanel.add(title);
 
 		changeBtn.setLocation(560, 130);
@@ -101,7 +101,7 @@ public class Gate2 implements MouseListener {
 		explanation.setLocation(10, 120);
 		explanation.setSize(500, 180);
 		explanation.setFont(new Font("Gothic", Font.PLAIN, 15));
-		explanation.setText("<html> ¡Ø ÁÖÀÇ»çÇ× 1 <br> ¡Ø ÁÖÀÇ»çÇ× 2 <br> ¡Ø ÁÖÀÇ»çÇ× 3 <br> ¡Ø ÁÖÀÇ»çÇ× 4 </html>");
+		explanation.setText("<html> â€» ì£¼ì˜ì‚¬í•­ 1 <br> â€» ì£¼ì˜ì‚¬í•­ 2 <br> â€» ì£¼ì˜ì‚¬í•­ 3 <br> â€» ì£¼ì˜ì‚¬í•­ 4 </html>");
 		bottomPanel.add(explanation);
 
 		frame.add(topPanel);
@@ -113,11 +113,11 @@ public class Gate2 implements MouseListener {
 		if (e.getSource() == newStart) {
 			try {
 				while (true) {
-					String stockCode = JOptionPane.showInputDialog("Á¾¸ñ ÄÚµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+					String stockCode = JOptionPane.showInputDialog("ì¢…ëª© ì½”ë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 					if (StringUtils.isEmpty(stockCode)) {
 						System.exit(0);
 					}
-					// ÀÔ·ÂµÈ Á¾¸ñÄÚµå °Ë»ç
+					// ì…ë ¥ëœ ì¢…ëª©ì½”ë“œ ê²€ì‚¬
 					CSVReader reader1;
 					reader1 = new CSVReader(
 							new FileReader("C:\\Users\\iic\\eclipse-workspace\\bowl\\stockCodeData.csv"));
@@ -137,9 +137,9 @@ public class Gate2 implements MouseListener {
 					writer.close();
 				}
 				
-				// ±× ÈÄ »ç¿ëÀÚ Á¤º¸ ¸Ç µÚ¿¡ 1À» ³Ö´Â´Ù.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				// ê·¸ í›„ ì‚¬ìš©ì ì •ë³´ ë§¨ ë’¤ì— 1ì„ ë„£ëŠ”ë‹¤.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 				
-				// ÀÌÀü µ¥ÀÌÅÍ Áö¿ì±â (»ç¿ëÀÚ °íÀ¯¹øÈ£)·Î ½Äº°ÇØ¼­ Áö¿î´Ù.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				// ì´ì „ ë°ì´í„° ì§€ìš°ê¸° (ì‚¬ìš©ì ê³ ìœ ë²ˆí˜¸)ë¡œ ì‹ë³„í•´ì„œ ì§€ìš´ë‹¤.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 				
 				
 			} catch (FileNotFoundException e1) {
@@ -154,8 +154,8 @@ public class Gate2 implements MouseListener {
 			}
 
 		} else if (e.getSource() == oldStart) {
-			// »ç¿ëÀÚ Á¤º¸ ¸Ç µÚ¿¡ 1ÀÎ °æ¿ì¿¡¸¸ ½ÇÇàÇÒ ¼ö ÀÖµµ·Ï ÇÔ
-			// ±×´ë·Î ½ÇÇàÇÔ
+			// ì‚¬ìš©ì ì •ë³´ ë§¨ ë’¤ì— 1ì¸ ê²½ìš°ì—ë§Œ ì‹¤í–‰í•  ìˆ˜ ìˆë„ë¡ í•¨
+			// ê·¸ëŒ€ë¡œ ì‹¤í–‰í•¨
 
 		} else if (e.getSource() == withdrawalBtn) {
 			try {
@@ -166,7 +166,7 @@ public class Gate2 implements MouseListener {
 					i++;
 					if (id.equals(readNext[0])) {
 						if (pw.equals(readNext[1])) {
-							int result = JOptionPane.showConfirmDialog(null, "Å»ÅğÇÏ½Ã°Ú½À´Ï±î?", "¾È³»",
+							int result = JOptionPane.showConfirmDialog(null, "íƒˆí‡´í•˜ì‹œê² ìŠµë‹ˆê¹Œ?", "ì•ˆë‚´",
 									JOptionPane.YES_NO_OPTION);
 							if (result == JOptionPane.YES_OPTION) {
 								String dummy = "";
@@ -175,9 +175,9 @@ public class Gate2 implements MouseListener {
 								String line;
 								for (int k = 0; k < i; k++) {
 									line = br.readLine();
-									dummy += (line + "\r\n"); // @@@@@@@@ \r\n ¼ø¼­ ¼öÁ¤ÇÊ¿ä
+									dummy += (line + "\r\n"); // @@@@@@@@ \r\n ìˆœì„œ ìˆ˜ì •í•„ìš”
 								}
-								br.readLine(); // ÇÑ ÁÙ ¾ø¾Ö±â
+								br.readLine(); // í•œ ì¤„ ì—†ì• ê¸°
 
 								while ((line = br.readLine()) != null) {
 									dummy += (line + "\r\n");
@@ -188,7 +188,7 @@ public class Gate2 implements MouseListener {
 								fw.close();
 								br.close();
 
-								JOptionPane.showMessageDialog(null, "Å»Åğ ¿Ï·á", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+								JOptionPane.showMessageDialog(null, "íƒˆí‡´ ì™„ë£Œ", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 								new Gate1();
 								frame.dispose();
 							}
@@ -208,20 +208,20 @@ public class Gate2 implements MouseListener {
 					if (id.equals(readNext[0])) {
 						if (pw.equals(readNext[1])) {
 
-							String newpw = JOptionPane.showInputDialog("º¯°æÇÒ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+							String newpw = JOptionPane.showInputDialog("ë³€ê²½í•  ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 
 							if (StringUtils.isEmpty(newpw)) {
-								JOptionPane.showMessageDialog(null, "Ãë¼ÒµÇ¾ú½À´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+								JOptionPane.showMessageDialog(null, "ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 							}
 
 							else if (pw.equals(newpw)) {
-								JOptionPane.showMessageDialog(null, "µ¿ÀÏÇÑ ºñ¹Ğ¹øÈ£ÀÔ´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+								JOptionPane.showMessageDialog(null, "ë™ì¼í•œ ë¹„ë°€ë²ˆí˜¸ì…ë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 								continue;
 							}
 
 							else if (Gate1.checking("id", newpw)) {
 
-								String checkpw = JOptionPane.showInputDialog("´Ù½ÃÇÑ¹ø ÀÔ·ÂÇÏ¼¼¿ä");
+								String checkpw = JOptionPane.showInputDialog("ë‹¤ì‹œí•œë²ˆ ì…ë ¥í•˜ì„¸ìš”");
 
 								if (newpw.equals(checkpw)) {
 									String dummy = "";
@@ -231,10 +231,10 @@ public class Gate2 implements MouseListener {
 
 									for (int k = 0; k < i; k++) {
 										line = br.readLine();
-										dummy += (line + "\r\n"); // @@@@@@@@ \r\n ¼ø¼­ ¼öÁ¤ÇÊ¿ä
+										dummy += (line + "\r\n"); // @@@@@@@@ \r\n ìˆœì„œ ìˆ˜ì •í•„ìš”
 									}
 
-									br.readLine(); // ÇÑ ÁÙ ¾ø¾Ö±â
+									br.readLine(); // í•œ ì¤„ ì—†ì• ê¸°
 									CSVReader rr = new CSVReaderBuilder(new FileReader(file)).withSkipLines(i).build();
 
 									String[] bowl = rr.readNext();
@@ -252,13 +252,13 @@ public class Gate2 implements MouseListener {
 
 									pw = newpw;
 
-									JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£°¡ º¯°æµÇ¾ú½À´Ï´Ù.", "¾È³»",
+									JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.", "ì•ˆë‚´",
 											JOptionPane.PLAIN_MESSAGE);
 								} else {
-									JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£°¡ ´Ù¸¨´Ï´Ù.", "¾È³»", JOptionPane.PLAIN_MESSAGE);
+									JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ê°€ ë‹¤ë¦…ë‹ˆë‹¤.", "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 								}
 							} else {
-								JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ,ºñ¹Ğ¹øÈ£ Á¶°ÇÀ» È®ÀÎÇÏ¼¼¿ä.", "¾È³»",
+								JOptionPane.showMessageDialog(null, "ì•„ì´ë””,ë¹„ë°€ë²ˆí˜¸ ì¡°ê±´ì„ í™•ì¸í•˜ì„¸ìš”.", "ì•ˆë‚´",
 										JOptionPane.PLAIN_MESSAGE);
 							}
 						}

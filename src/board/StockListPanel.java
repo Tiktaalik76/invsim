@@ -50,8 +50,8 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 
 		list = new JList<String>(model);
 		inputField = new JTextField(9);
-		addBtn = new JButton("Á¾¸ñÃß°¡");
-		selBtn = new JButton("Àû¿ë");
+		addBtn = new JButton("ì¢…ëª©ì¶”ê°€");
+		selBtn = new JButton("ì ìš©");
 
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -141,8 +141,8 @@ public class StockListPanel extends JPanel implements MouseListener, KeyListener
 	public void applyItem(int index) throws IOException {
 		if (index < 0) {
 			if (model.size() == 0)
-				return; // ¾Æ¹«°Íµµ ÀúÀåµÇ¾î ÀÖÁö ¾ÊÀ¸¸é return
-			index = 0; // ±× ÀÌ»óÀÌ¸é °¡Àå »óÀ§ list index
+				return; // ì•„ë¬´ê²ƒë„ ì €ì¥ë˜ì–´ ìˆì§€ ì•Šìœ¼ë©´ return
+			index = 0; // ê·¸ ì´ìƒì´ë©´ ê°€ì¥ ìƒìœ„ list index
 		}
 
 		String stockCode = (String) model.get(index);

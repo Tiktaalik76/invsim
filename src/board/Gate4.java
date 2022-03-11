@@ -18,7 +18,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
 public class Gate4 implements MouseListener {
-	JFrame frame = new JFrame("È¸¿ø°¡ÀÔ");
+	JFrame frame = new JFrame("íšŒì›ê°€ì…");
 
 	JLabel pnLabel = new JLabel();
 	JLabel ans1Label = new JLabel();
@@ -30,7 +30,7 @@ public class Gate4 implements MouseListener {
 
 	JLabel explanation = new JLabel();
 
-	JButton regiBtn = new JButton("°¡ÀÔÇÏ±â");
+	JButton regiBtn = new JButton("ê°€ì…í•˜ê¸°");
 
 	String file = "C:\\Users\\iic\\Desktop\\idpw.csv";
 	String id;
@@ -59,7 +59,7 @@ public class Gate4 implements MouseListener {
 		pnLabel.setLocation(10, 0);
 		pnLabel.setSize(400, 30);
 		pnLabel.setFont(new Font("Gothic", Font.PLAIN, 15));
-		pnLabel.setText("ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+		pnLabel.setText("ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 		pnLabel.setHorizontalAlignment(JLabel.LEFT);
 
 		pnbowl.setLocation(10, 30);
@@ -69,7 +69,7 @@ public class Gate4 implements MouseListener {
 		ans1Label.setLocation(10, 70);
 		ans1Label.setSize(400, 30);
 		ans1Label.setFont(new Font("Gothic", Font.PLAIN, 15));
-		ans1Label.setText("Áú¹® 1 : ´ç½ÅÀÇ °íÇâÀº ¾îµğÀÔ´Ï±î?");
+		ans1Label.setText("ì§ˆë¬¸ 1 : ë‹¹ì‹ ì˜ ê³ í–¥ì€ ì–´ë””ì…ë‹ˆê¹Œ?");
 		ans1Label.setHorizontalAlignment(JLabel.LEFT);
 
 		ans1bowl.setLocation(10, 100);
@@ -79,7 +79,7 @@ public class Gate4 implements MouseListener {
 		ans2Label.setLocation(10, 140);
 		ans2Label.setSize(400, 30);
 		ans2Label.setFont(new Font("Gothic", Font.PLAIN, 15));
-		ans2Label.setText("Áú¹® 2 : ´ç½ÅÀÇ º¸¹° 1È£´Â ¹«¾ùÀÔ´Ï±î?");
+		ans2Label.setText("ì§ˆë¬¸ 2 : ë‹¹ì‹ ì˜ ë³´ë¬¼ 1í˜¸ëŠ” ë¬´ì—‡ì…ë‹ˆê¹Œ?");
 		ans2Label.setHorizontalAlignment(JLabel.LEFT);
 
 		ans2bowl.setLocation(10, 170);
@@ -89,7 +89,7 @@ public class Gate4 implements MouseListener {
 		explanation.setLocation(10, 200);
 		explanation.setSize(400, 120);
 		explanation.setText(
-				"<html>1. ÀüÈ­¹øÈ£´Â \"-\" ¾øÀÌ 11ÀÚ¸®ÀÇ ¼ıÀÚ·Î¸¸ ÀÔ·ÂÇÏ¼¼¿ä. <br> 2. ÀüÈ­¹øÈ£´Â ¾ÆÀÌµğ ºĞ½Ç ½Ã »ç¿ëµË´Ï´Ù. <br> 3. Áú¹®ÀÇ ´äÀº 1~12ÀÚ¸®ÀÇ ±ÛÀÚ·Î ÀÔ·ÂÇÏ¼¼¿ä. <br> 4. Áú¹®¿¡ »ç¿ëÇÏÁö ¸øÇÏ´Â ¹®ÀÚ´Â ´ÙÀ½°ú °°½À´Ï´Ù. <br>&nbsp&nbsp&nbsp&nbsp°ø¹é, ÅÇ, * , \\ , : , \" , &lt , &gt , | <br> 5. °³ÀÎÈ®ÀÎÁú¹®Àº ¾ÆÀÌµğ ºĞ½Ç ½Ã »ç¿ëµË´Ï´Ù.</html>");
+				"<html>1. ì „í™”ë²ˆí˜¸ëŠ” \"-\" ì—†ì´ 11ìë¦¬ì˜ ìˆ«ìë¡œë§Œ ì…ë ¥í•˜ì„¸ìš”. <br> 2. ì „í™”ë²ˆí˜¸ëŠ” ì•„ì´ë”” ë¶„ì‹¤ ì‹œ ì‚¬ìš©ë©ë‹ˆë‹¤. <br> 3. ì§ˆë¬¸ì˜ ë‹µì€ 1~12ìë¦¬ì˜ ê¸€ìë¡œ ì…ë ¥í•˜ì„¸ìš”. <br> 4. ì§ˆë¬¸ì— ì‚¬ìš©í•˜ì§€ ëª»í•˜ëŠ” ë¬¸ìëŠ” ë‹¤ìŒê³¼ ê°™ìŠµë‹ˆë‹¤. <br>&nbsp&nbsp&nbsp&nbspê³µë°±, íƒ­, * , \\ , : , \" , &lt , &gt , | <br> 5. ê°œì¸í™•ì¸ì§ˆë¬¸ì€ ì•„ì´ë”” ë¶„ì‹¤ ì‹œ ì‚¬ìš©ë©ë‹ˆë‹¤.</html>");
 		explanation.setFont(new Font("Gothic", Font.PLAIN, 12));
 
 		regiBtn.addMouseListener(this);
@@ -136,7 +136,7 @@ public class Gate4 implements MouseListener {
 							fw.write(id + "," + pw + "," + inputPN + "," + inputans1 + "," + inputans2 + "," + numbering
 									+ "," + "0" +"\n");
 
-							message = "È¸¿ø °¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
+							message = "íšŒì› ê°€ì…ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.";
 							frame.dispose();
 
 						} catch (IOException | CsvValidationException e1) {
@@ -144,17 +144,17 @@ public class Gate4 implements MouseListener {
 						}
 
 					} else {
-						message = "Áú¹® 2¸¦ ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.";
+						message = "ì§ˆë¬¸ 2ë¥¼ ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.";
 					}
 				} else {
-					message = "Áú¹® 1À» ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.";
+					message = "ì§ˆë¬¸ 1ì„ ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.";
 				}
 			} else {
-				message = "ÀüÈ­¹øÈ£ ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.";
+				message = "ì „í™”ë²ˆí˜¸ ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.";
 			}
 
 			if (message != null) {
-				JOptionPane.showMessageDialog(null, message, "¾È³»", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, message, "ì•ˆë‚´", JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 	}
@@ -195,7 +195,7 @@ public class Gate4 implements MouseListener {
 		if (bowl.length == 11) {
 			for (int i = 0; i < bowl.length; i++) {
 				if (Character.isDigit(bowl[i]) == false) {
-					isStr = true; // ¹®ÀÚ ¸¸³ª¸é µé¾î¿È
+					isStr = true; // ë¬¸ì ë§Œë‚˜ë©´ ë“¤ì–´ì˜´
 				}
 			}
 			if (isStr == true) {
