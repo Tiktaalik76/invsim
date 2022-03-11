@@ -22,7 +22,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
 public class JChart extends JPanel {
-	private static int skips;
+	public static int skips;
 	DynamicTimeSeriesCollection dataSet;
 
 	public JChart() {
