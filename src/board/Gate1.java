@@ -223,7 +223,6 @@ public class Gate1 implements MouseListener {
 	public static boolean checking(String id, String pw) {
 		boolean check = false;
 		if ((id.length() < 12) && (id.length() > 0)) {
-			if ((pw.length() < 12) && (pw.length() > 0)) {
 				if (!((id.contains(" ")) || (pw.contains(" ")) || (id.contains("\t")) || (pw.contains("\t"))
 						|| (id.contains("\\")) || (pw.contains("\\")) || (id.contains(":")) || (pw.contains(":"))
 						|| (id.contains("*")) || (pw.contains("*")) || (id.contains("?")) || (pw.contains("?"))
@@ -234,7 +233,7 @@ public class Gate1 implements MouseListener {
 					check = true;
 				}
 			}
-		}
+
 		return check;
 	}
 }

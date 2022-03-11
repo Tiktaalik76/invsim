@@ -106,8 +106,7 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 
 					JOptionPane.showMessageDialog(null, "매수가 체결되었습니다", "안내", JOptionPane.PLAIN_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null, "수량을 다시 입력하세요" + "\n" + "수량은 양의 정수" + "\n", "안내",
-							JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "수량을 다시 입력하세요" + "\n" + "수량은 양의 정수" + "\n", "안내", JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 
@@ -141,8 +140,7 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 
 					JOptionPane.showMessageDialog(null, "매수가 체결되었습니다", "안내", JOptionPane.PLAIN_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null, "수량을 다시 입력하세요" + "\n" + "수량은 양의 정수" + "\n", "안내",
-							JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "수량을 다시 입력하세요" + "\n" + "수량은 양의 정수" + "\n", "안내", JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 
@@ -150,7 +148,6 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 			int 수량 = 0;
 			int 총보유수량 = 0;
 			int 매수금액 = 0;
-
 			int 손익분기점 = 0;
 			int 매도가능수량 = 0;
 
