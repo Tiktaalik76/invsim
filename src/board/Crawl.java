@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 
 public class Crawl {
 	public static synchronized String[] getPrice() {
-		String url = "https://finance.naver.com/item/sise.naver?code=066570";
+		String url = "https://finance.naver.com/item/sise.naver?code=019170";
 		Document doc = null;
 
 		try {
