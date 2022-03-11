@@ -97,11 +97,13 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 					writer.close();
 
 					예수금 -= 시장가 * quantity;
-
+					
 					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
 					writer.write(Integer.toString(예수금));
 					writer.close();
-
+					
+					View.cash = 예수금;
+					
 					JOptionPane.showMessageDialog(null, "매수가 체결되었습니다", "안내", JOptionPane.PLAIN_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(null, "수량을 다시 입력하세요" + "\n" + "수량은 양의 정수" + "\n", "안내",
@@ -134,6 +136,8 @@ public class StockTradePanel extends JPanel implements MouseListener, KeyListene
 					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
 					writer.write(Integer.toString(예수금));
 					writer.close();
+					
+					View.cash = 예수금;
 
 					JOptionPane.showMessageDialog(null, "매수가 체결되었습니다", "안내", JOptionPane.PLAIN_MESSAGE);
 				} else {

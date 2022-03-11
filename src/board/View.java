@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class View extends Thread {
 	String stockCode;
 	String transactionDetailsFilePath;
 	public static int mIsUpdated = 0;
-	public static int 예수금 = 0;
+	public static int cash = 0;
 
 	@Override
 	public void run() {
@@ -65,13 +64,6 @@ public class View extends Thread {
 					writer.write(stockCode);
 					writer.close();
 
-					File userDetailsFilePath = new File("C:\\Users\\cms\\eclipse-workspace\\bowl\\userDetails.csv");
-					File transactionDetailsFilePath = new File(
-							"C:\\Users\\cms\\eclipse-workspace\\bowl\\transactionDetails.csv");
-					File dataList = new File("C:\\Users\\cms\\eclipse-workspace\\bowl\\dataList.csv");
-
-					// 종목코드 삭제하고 그냥 bowl 파일안에 있는 모든 파일 삭제해야함.
-
 					// 빈 데이터 생성
 					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\" + stockCode + "userDetails.csv",
 							false);
@@ -90,6 +82,8 @@ public class View extends Thread {
 					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", false);
 					writer.write("100000000");
 					writer.close();
+					
+					cash = 10000000;
 
 					break;
 				}
@@ -260,8 +254,8 @@ public class View extends Thread {
 					}
 
 					secChartPanel.update();
-					String asdf = Tools.readOneFactor("C:\\Users\\cms\\eclipse-workspace\\bowl\\cash.csv", 0, 0);
-					예수금Label.setText(asdf);
+					
+					예수금Label.setText(Integer.toString(cash));
 
 					timeLabel.setText(Crawl.getTime());
 					현재가Label.setText(Crawl.getPrice(stockCode, 1));
