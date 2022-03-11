@@ -38,7 +38,7 @@ public class DayChart extends JPanel {
 	private static double mLowest;
 	private static double mHighest;
 	private static Date mEnd;
-	private static Date mFirst;
+	private static Date mStart;
 	
 	public DayChart() throws IOException, CsvValidationException {
 		super(null);
@@ -50,8 +50,8 @@ public class DayChart extends JPanel {
 		writer.close();
 		
 		// set data
-		XYDataset dataSet = getDataSet();		
-
+		XYDataset dataSet = getDataSet();
+		
 		// renderer
 		CandlestickRenderer renderer = new CandlestickRenderer();
 		renderer.setDrawVolume(false);
@@ -62,7 +62,7 @@ public class DayChart extends JPanel {
 		// x-axis
 		setLayout(new FlowLayout());
 		DateAxis domainAxis = new DateAxis("Date");
-		domainAxis.setRange(mFirst, mEnd);
+		domainAxis.setRange(mStart, mEnd);
 		
 		// y-axis
 		NumberAxis rangeAxis = new NumberAxis("Price");
@@ -124,7 +124,7 @@ public class DayChart extends JPanel {
 			line3 = String.join("", line1);
 			arrangedLine = line3.split("@");
 			LocalDate dateTime = LocalDate.parse(arrangedLine[0], format);
-			mFirst = Date.from(dateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			mStart = Date.from(dateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
 			
 			
 			CSVReader reader2 = new CSVReader(new FileReader(file));
@@ -173,7 +173,7 @@ public class DayChart extends JPanel {
 		String segment = stockCode + ".KS";
 		String url = url1+segment+url2+segment;
 		
-		Document doc = Jsoup.connect(url).timeout(20000).get();
+		Document doc = Jsoup.connect(url).timeout(100000).get();
 		
 		Elements stockTableBody = doc.select("table tbody tr");
 		StringBuilder stringBuilder = new StringBuilder();

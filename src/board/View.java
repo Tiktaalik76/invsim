@@ -24,12 +24,13 @@ import com.opencsv.exceptions.CsvValidationException;
 
 public class View extends Thread {
 	String file = "C:\\Users\\cms\\eclipse-workspace\\stockCode.csv";
+	File transactionDetailsFilePath = new File("C:\\Users\\cms\\eclipse-workspace\\transactionDetails.csv");
 	String mStockCode;
 
 	@Override
 	public void run() {
 		try {
-			// 초기화면
+			// 새로 시작할지 결정
 			int result = JOptionPane.showConfirmDialog(null, "새로 시작하시겠습니까?", "안내", JOptionPane.YES_NO_OPTION);
 
 			if (result == JOptionPane.CLOSED_OPTION) {
@@ -39,21 +40,21 @@ public class View extends Thread {
 				while (true) {
 					this.mStockCode = JOptionPane.showInputDialog("종목 코드를 입력하세요");
 
+					// 입력된 종목코드 검사
 					CSVReader reader1 = new CSVReader(new FileReader("C:\\Users\\cms\\eclipse-workspace\\stockCodeData.csv"));
 					String[] readNext;
-					
-					int asdf = 2;
-					
+					int check = 0;
 					while((readNext = reader1.readNext()) != null) {
 						if (readNext[1].equals(mStockCode)) {
-							asdf = 3;
+							check = 1;
 						}
 					}
 					
-					if (mStockCode.length()==0||mStockCode.equals("")||asdf == 2) {
+					if (mStockCode.length()==0||mStockCode.equals("")||check == 0) {
 						continue;
-					}
+					}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
 					
+					// 종목코드 저장
 					FileWriter writer = new FileWriter(file, false);
 					writer.write(mStockCode);
 					writer.close();
@@ -62,13 +63,17 @@ public class View extends Thread {
 					File transactionDetailsFilePath = new File("C:\\Users\\cms\\eclipse-workspace\\transactionDetails.csv");
 					File dataList = new File("C:\\Users\\cms\\eclipse-workspace\\dataList.csv");
 					
+					// 이전 데이터 삭제
 					userDetailsFilePath.delete();
 					transactionDetailsFilePath.delete();
 					dataList.delete();
 					
+					// 빈 데이터 생성
 					writer = new FileWriter("C:\\Users\\cms\\eclipse-workspace\\userDetails.csv", false);
-					writer.write("100000000" + "\n" + "0" + "\n" + "0" + "\n" + "0"+ "\n" + "0" + "\n" + "0" + "\n" + "0" + "\n");
+					writer.write("100000000" + "\n" + "0" + "\n" + "0" + "\n" + "0"+ "\n" + "0");
 					writer.close();
+					
+					transactionDetailsFilePath.createNewFile();
 					
 					break;
 				}
@@ -76,7 +81,7 @@ public class View extends Thread {
 			else {
 				mStockCode = CSVTools.readOneFactor(file, 0, 0);
 			}
-
+			// 스레드 실행
 			Save saveThread = new Save();
 			saveThread.start();
 
@@ -113,7 +118,7 @@ public class View extends Thread {
 			JPanel 예수금Panel = new JPanel();
 			JLabel 예수금GuideLabel = new JLabel();
 			JLabel 예수금Label = new JLabel();
-			JLabel[] list = { 예수금Label, 평가손익Label, 수익률Label, 보유수량Label, 평가금액Label, 매도가능수량Label, 매수금액Label, 손익분기점Label };
+			JLabel[] list = { 예수금Label, 보유수량Label, 매도가능수량Label, 매수금액Label, 손익분기점Label };
 
 			// 보더 설정
 			EtchedBorder eborder;
@@ -248,6 +253,7 @@ public class View extends Thread {
 			frame.add(identificationPanel);
 			frame.add(예수금Panel);
 			frame.add(tabPane);
+			
 			while (true) {
 				try {
 					String[] detailItem;
@@ -256,13 +262,47 @@ public class View extends Thread {
 						detailItem = items.get(i);
 						list[i].setText(detailItem[0].toString());
 					}
-					
+
 					secChartPanel.update();
 
 					timeLabel.setText(Crawl.getTime());
 					현재가Label.setText(Crawl.getPrice(mStockCode, 1));
 					outputPrice.setText(Crawl.getPrice(mStockCode, 1));
 
+					
+					CSVReader reader = new CSVReader(new FileReader(transactionDetailsFilePath));
+					String[] readNext;
+					int price;
+					int quantity;
+					int wholequantity = 0;
+					double wholeprice = 0;
+					while((readNext = reader.readNext()) != null) {
+						price = Integer.parseInt(readNext[0]);
+						quantity = Integer.parseInt(readNext[1]);
+						
+						wholequantity += quantity;
+						wholeprice += price*quantity;
+						
+						if(wholeprice == 0 || wholequantity == 0) {
+							wholeprice = 0;
+						}	
+					}
+					
+					int 시장가 = Integer.parseInt(Crawl.getPrice(mStockCode, 0));
+					String 평가금액 = Integer.toString(시장가*wholequantity);
+					평가금액Label.setText(평가금액);
+					
+					if(wholeprice == 0 || wholequantity == 0) {
+						평가손익Label.setText("0");	
+						수익률Label.setText("0");
+					}
+					else {
+						String 평가손익 = Double.toString(시장가*wholequantity - wholeprice);
+						평가손익Label.setText(평가손익);
+						String 수익률 = String.format("%.2f", (시장가*wholequantity - wholeprice)/wholeprice*100);
+						수익률Label.setText(수익률+"%");
+					}
+					
 					sleep(1000);
 
 				} catch (IOException e) {
@@ -278,6 +318,5 @@ public class View extends Thread {
 		} catch (CsvValidationException e) {
 			e.printStackTrace();
 		}
-
 	}
 }
